@@ -1,0 +1,14 @@
+#' Burglaries, Washington DC, first six months of 2016
+#'
+#' A dataset containing the X and Y coordinates of burglaries, with
+#' the start and end date and times of the crimes.
+#'
+#' @format A data frame with 1025 rows and 4 variables:
+#' \describe{
+#'   \item{X}{X coordinate}
+#'   \item{Y}{Y coordinate}
+#'   \item{StartDateTime}{Start date and time of the burglary in POSIXct format}
+#'   \item{EndDateTime}{End date and time of the burglary in POSIXct format}
+#' }
+#' @source \url{https://opendata.dc.gov/}
+"dcburglaries"
