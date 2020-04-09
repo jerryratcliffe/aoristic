@@ -1,9 +1,18 @@
-#' Creates a plot showing aoristic values for one hour of the week
+#' Plot aoristic distributions for one hour
+#' 
+#' Creates a plot showing aoristic values for one hour of the week. The X, Y coordinate pair (or latitude
+#' and longitude) are used to create a plot that shows each event that could have occured in the user-
+#' selected hour. Each event is color coded to represent the aoristic weight, range ~0.006 to 1. Events
+#' with weight 1 definitely occurred during that hour, while events with values at the lower end of the
+#' range could have occured at one of many hours. For guidance on which day/hour is represented by a
+#' number, use aoristic2.ref()
 #'
-#' @param data1 data.frame created by aoristic2.df
+#' @param data1 a data frame output from the aoristic2.df function
 #' @param AorHour use seelected number for an hour in the week (range 1-168)
 #' @return A ggplot object
 #' @import ggplot2
+#' @examples 
+#' aor.plot <- aoristic2.map(aor.df, '25')
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 
@@ -11,6 +20,8 @@
 # Package: 'Ctrl + Shift + E' Test Package: 'Ctrl + Shift + T'
 
 aoristic2.map <- function(data1, AorHour = "1") {
+    
+    X <- Y <- Aoristic.value <- NULL #prevents R CMD check flagging 'no visible global function definition'
     
     if (!is.data.frame(data1)) {
         stop("The input data frame specified is not a data.frame object")

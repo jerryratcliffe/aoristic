@@ -1,7 +1,22 @@
-#' Summarizes the aoristic sums for each hour of the week, based on aoristic data frame
-#' @param data1 data.frame with output from aoristic function
-#' @param output enter 'xlsx' for an Excel format output, 'jpg' for JPEG grid, blank otherwise
+#' Summarize weekly aoristic weights
+#'
+#' Summarizes the aoristic sums for each hour of the week, based on output from an aoristic data 
+#' frame (created by aoristic2.df). The function returns a data frame, with optional outputs. 
+#' Option 'xlsx' sends the data frame to an Excel spreadsheet in the #' same folder as the source 
+#' data. Filenames increment to prevent overwriting previous analyses. Using #' option 'jpg' 
+#' creates a color coded summary table in jpg format in the same folder as the source data.
+#' The filename is aoristic_distribution.jpg and it will overwrite previous files of the same name.
+#'  
+#' NOTE: Be aware that the distribution of values is NOT the same as the aoristic2.ref() output, because
+#' the summary charts and graphs here move Sunday to the end of the week to keep the weekend together.
+#' 
+#' @param data1 a data frame output from the aoristic2.df function
+#' @param output output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise
 #' @return A data frame with aoristic values summed for each hour of the week
+#' @examples 
+#' aor.sum <- aoristic2.summary(aor.df)
+#' aor.sum <- aoristic2.summary(aor.df, output = 'xlsx')
+#' aor.sum <- aoristic2.summary(aor.df, output = 'jpg')
 #' @import formattable htmltools
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
@@ -97,10 +112,10 @@ aoristic2.summary <- function (data1, output = ""){
     )
 
     if (output == "jpg"){
-          export_formattable(format.table,"aoristic.distribution.jpg")
+          export_formattable(format.table,"aoristic_distribution.jpg")
           # webshot::install_phantomjs()
           viewer <- getOption("viewer")
-          htmlFile <- paste(getwd(), "/aoristic.distribution.jpg", sep='')
+          htmlFile <- paste(getwd(), "/aoristic_distribution.jpg", sep='')
           viewer(htmlFile)
           txt1 <- paste('\n****** Aoristic summary grid in jpg format written to: \n',htmlFile, sep='       ')
           message(txt1)

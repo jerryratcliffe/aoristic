@@ -2,17 +2,21 @@
 % Please edit documentation in R/aoristic2.graph.R
 \name{aoristic2.graph}
 \alias{aoristic2.graph}
-\title{Creates eight charts for each day of the week (and a total) based on aoristic distribution}
+\title{Create aoristic distribution chart}
 \usage{
 aoristic2.graph(data1, marks = "")
 }
 \arguments{
-\item{data1}{data.frame with the output from aoristic2.df}
+\item{data1}{a data frame output from the aoristic2.df function}
 
 \item{marks}{marks='T' to show tick marks for week distribution. Leave blank otherwise.}
 }
 \description{
-Creates eight charts for each day of the week (and a total) based on aoristic distribution
+Takes the output from the aoristic2.summary() function and converts that data frame
+into a series of eight charts for each day of the week (and a total chart) based on the
+aggregate aoristic distribution of the events. 
+Option (marks='T') adds small tick marks showing the (y-axis adjusted) overall weekly 
+distribution for comparison to the daily value.
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

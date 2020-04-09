@@ -1,12 +1,26 @@
-#' Create a data.frame with hourly aoristic values
+#' Calculate aoristic weights
+#' 
+#' Calculates aoristic weights across 168 units representing each hour of the week (24 hours x 7 days). 
+#' It is designed for situations when an event time is not know but could be spread across numerous
+#' hours or days, and is represented by a Start (or From) date and time, and an End (or To) date and time.
+#' The output retains the source data, and can be reimported into a GIS for spatial analysis. The output 
+#' from this function is used in other aoristic2 library functions. 
+#' 
+#' NOTE: Events with no recorded End (or To) datetime will be given a default time span of one hour from
+#' the Start (of From) datetime. Events with start datetime events after the end datetime will be 
+#' ignored. Events with time spans lasting more than one week (>168 hours) will default to a time span of
+#' 168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
+#' 
 #'
-#' @param data1 data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time
-#' @param Xcoord a vector of the X coordinate or latitude (passed through for user)
-#' @param Ycoord a vector of the Y coordinate or longitude (passed through for user)
-#' @param DateTimeFrom a  vector of the column name for FromDateTime (POSIXct date-time object)
+#' @param data1 data frame with a minimum of 4 columns with X, Y coords, Start and End date/time
+#' @param Xcoord a vector of the event X coordinate or latitude (passed through for user)
+#' @param Ycoord a vector of the event Y coordinate or longitude (passed through for user)
+#' @param DateTimeFrom a vector of the column name for FromDateTime (POSIXct date-time object)
 #' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.
-#' @return A data frame with aoristic values for each hour of the week for each input row
+#' @return Returns a data frame with aoristic values for each hour of the week for each input row
 #' @import lubridate
+#' @examples 
+#' df <- aoristic2.df(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 #'
@@ -15,7 +29,8 @@
 # Package: 'Ctrl + Shift + E' Test Package: 'Ctrl + Shift + T'
 
 
-aoristic2.df <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) {
+aoristic2.df <- function
+(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) {
     
     if (!is.data.frame(data1)) {
         stop("The input data frame specified is not a data.frame object")

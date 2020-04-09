@@ -15,7 +15,7 @@ context("aoristic2 program")
 # dcdata$dcFrom = as.POSIXct(dcdata$dcFrom, format="%m/%d/%Y %H:%M", tz='')
 # dcdata$dcTo = as.POSIXct(dcdata$dcTo, format="%m/%d/%Y %H:%M", tz='')
 # aor.datacheck <- aoristic2.datacheck(dcdata, "XCOORD", "YCOORD", "dcFrom", "dcTo")
-aor.datacheck <- aoristic2.datacheck(dcdata, "X", "Y", "StartDateTime", "EndDateTime")
+aor.datacheck <- aoristic2.datacheck(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
 
 
 test_that("aoristic.datacheck functions", {

@@ -2,7 +2,10 @@
 % Please edit documentation in R/aoristic2.ref.R
 \name{aoristic2.ref}
 \alias{aoristic2.ref}
-\title{Creates a data.frame with reference hour of the week (ref purposes only)}
+\title{Hour of the week reference chart
+Creates and opens a simple data frame with reference hour of the week. 
+This is a useful reference for the aoristic2.map(hour='xxx') function that requires a designated hour
+in order to map the requested one hour time period.}
 \usage{
 aoristic2.ref()
 }
@@ -10,7 +13,8 @@ aoristic2.ref()
 A data frame with hours of the week referenced
 }
 \description{
-Creates a data.frame with reference hour of the week (ref purposes only)
+NOTE: The charts from aoristic2.summary() do not use the same day/hour layout - they move Sunday 
+to the end of the layout to make the weekend period clearer to the user.
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

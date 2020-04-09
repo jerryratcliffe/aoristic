@@ -1,6 +1,12 @@
-# Data handling for aoristic values
+#' Hour of the week reference chart
 
-#' Creates a data.frame with reference hour of the week (ref purposes only)
+#' Creates and opens a simple data frame with reference hour of the week. 
+#' This is a useful reference for the aoristic2.map(hour='xxx') function that requires a designated hour
+#' in order to map the requested one hour time period. 
+#' 
+#' NOTE: The charts from aoristic2.summary() do not use the same day/hour layout - they move Sunday 
+#' to the end of the layout to make the weekend period clearer to the user. 
+#' 
 #' @return A data frame with hours of the week referenced
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
@@ -9,6 +15,8 @@
 # Package: 'Ctrl + Shift + E' Test Package: 'Ctrl + Shift + T'
 
 aoristic2.ref <- function() {
+    
+    View <- NULL #prevents R CMD check flagging 'no visible global function definition'
     
     hour.reference <- data.frame(matrix(0, ncol = 7, nrow = 24))
     colnames(hour.reference) <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")

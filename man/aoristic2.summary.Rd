@@ -2,20 +2,33 @@
 % Please edit documentation in R/aoristic2.summary.R
 \name{aoristic2.summary}
 \alias{aoristic2.summary}
-\title{Summarizes the aoristic sums for each hour of the week, based on aoristic data frame}
+\title{Summarize weekly aoristic weights}
 \usage{
 aoristic2.summary(data1, output = "")
 }
 \arguments{
-\item{data1}{data.frame with output from aoristic function}
+\item{data1}{a data frame output from the aoristic2.df function}
 
-\item{output}{enter 'xlsx' for an Excel format output, 'jpg' for JPEG grid, blank otherwise}
+\item{output}{output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise}
 }
 \value{
 A data frame with aoristic values summed for each hour of the week
 }
 \description{
-Summarizes the aoristic sums for each hour of the week, based on aoristic data frame
+Summarizes the aoristic sums for each hour of the week, based on output from an aoristic data 
+frame (created by aoristic2.df). The function returns a data frame, with optional outputs. 
+Option 'xlsx' sends the data frame to an Excel spreadsheet in the #' same folder as the source 
+data. Filenames increment to prevent overwriting previous analyses. Using #' option 'jpg' 
+creates a color coded summary table in jpg format in the same folder as the source data.
+The filename is aoristic_distribution.jpg and it will overwrite previous files of the same name.
+ 
+NOTE: Be aware that the distribution of values is NOT the same as the aoristic2.ref() output, because
+the summary charts and graphs here move Sunday to the end of the week to keep the weekend together.
+}
+\examples{
+aor.sum <- aoristic2.summary(aor.df)
+aor.sum <- aoristic2.summary(aor.df, output = 'xlsx')
+aor.sum <- aoristic2.summary(aor.df, output = 'jpg')
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

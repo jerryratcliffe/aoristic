@@ -2,26 +2,39 @@
 % Please edit documentation in R/aoristic2.df.R
 \name{aoristic2.df}
 \alias{aoristic2.df}
-\title{Create a data.frame with hourly aoristic values}
+\title{Calculate aoristic weights}
 \usage{
 aoristic2.df(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 }
 \arguments{
-\item{data1}{data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time}
+\item{data1}{data frame with a minimum of 4 columns with X, Y coords, Start and End date/time}
 
-\item{Xcoord}{a vector of the X coordinate or latitude (passed through for user)}
+\item{Xcoord}{a vector of the event X coordinate or latitude (passed through for user)}
 
-\item{Ycoord}{a vector of the Y coordinate or longitude (passed through for user)}
+\item{Ycoord}{a vector of the event Y coordinate or longitude (passed through for user)}
 
-\item{DateTimeFrom}{a  vector of the column name for FromDateTime (POSIXct date-time object)}
+\item{DateTimeFrom}{a vector of the column name for FromDateTime (POSIXct date-time object)}
 
 \item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.}
 }
 \value{
-A data frame with aoristic values for each hour of the week for each input row
+Returns a data frame with aoristic values for each hour of the week for each input row
 }
 \description{
-Create a data.frame with hourly aoristic values
+Calculates aoristic weights across 168 units representing each hour of the week (24 hours x 7 days). 
+It is designed for situations when an event time is not know but could be spread across numerous
+hours or days, and is represented by a Start (or From) date and time, and an End (or To) date and time.
+The output retains the source data, and can be reimported into a GIS for spatial analysis. The output 
+from this function is used in other aoristic2 library functions.
+}
+\details{
+NOTE: Events with no recorded End (or To) datetime will be given a default time span of one hour from
+the Start (of From) datetime. Events with start datetime events after the end datetime will be 
+ignored. Events with time spans lasting more than one week (>168 hours) will default to a time span of
+168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
+}
+\examples{
+df <- aoristic2.df(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

@@ -2,12 +2,12 @@
 % Please edit documentation in R/aoristic2.map.R
 \name{aoristic2.map}
 \alias{aoristic2.map}
-\title{Creates a plot showing aoristic values for one hour of the week}
+\title{Plot aoristic distributions for one hour}
 \usage{
 aoristic2.map(data1, AorHour = "1")
 }
 \arguments{
-\item{data1}{data.frame created by aoristic2.df}
+\item{data1}{a data frame output from the aoristic2.df function}
 
 \item{AorHour}{use seelected number for an hour in the week (range 1-168)}
 }
@@ -15,7 +15,15 @@ aoristic2.map(data1, AorHour = "1")
 A ggplot object
 }
 \description{
-Creates a plot showing aoristic values for one hour of the week
+Creates a plot showing aoristic values for one hour of the week. The X, Y coordinate pair (or latitude
+and longitude) are used to create a plot that shows each event that could have occured in the user-
+selected hour. Each event is color coded to represent the aoristic weight, range ~0.006 to 1. Events
+with weight 1 definitely occurred during that hour, while events with values at the lower end of the
+range could have occured at one of many hours. For guidance on which day/hour is represented by a
+number, use aoristic2.ref()
+}
+\examples{
+aor.plot <- aoristic2.map(aor.df, '25')
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

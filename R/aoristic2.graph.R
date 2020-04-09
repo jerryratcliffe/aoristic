@@ -1,5 +1,12 @@
-#' Creates eight charts for each day of the week (and a total) based on aoristic distribution
-#' @param data1 data.frame with the output from aoristic2.df
+#' Create aoristic distribution chart
+#'
+#' Takes the output from the aoristic2.summary() function and converts that data frame
+#' into a series of eight charts for each day of the week (and a total chart) based on the
+#' aggregate aoristic distribution of the events. 
+#' Option (marks='T') adds small tick marks showing the (y-axis adjusted) overall weekly 
+#' distribution for comparison to the daily value. 
+#' 
+#' @param data1 a data frame output from the aoristic2.df function
 #' @param marks marks='T' to show tick marks for week distribution. Leave blank otherwise.
 #' @export
 #' @import grid
@@ -17,11 +24,9 @@ aoristic2.graph <- function(data1, marks = "") {
     plots.df$all <- as.numeric(plots.df$Sun) + as.numeric(plots.df$Mon) + as.numeric(plots.df$Tue)
     plots.df$all <- plots.df$all + as.numeric(plots.df$Wed) + as.numeric(plots.df$Thu)
     plots.df$all <- plots.df$all + as.numeric(plots.df$Fri) + as.numeric(plots.df$Sat)
-    # plots.df$all <- as.numeric(plots.df$Sunday) + as.numeric(plots.df$Monday) +
-    # as.numeric(plots.df$Tuesday) plots.df$all <- plots.df$all + as.numeric(plots.df$Wednesday) +
-    # as.numeric(plots.df$Thursday) plots.df$all <- plots.df$all + as.numeric(plots.df$Friday) +
-    # as.numeric(plots.df$Saturday)
     max.value.all <- max((plots.df$all), na.rm = TRUE)
+    
+    stack <- active <- scaled <- NULL #prevents R CMD check flagging 'no visible global function definition'
     
     df5 <- (stack(plots.df[, 2:8]))
     df5$values <- as.numeric(df5$values)

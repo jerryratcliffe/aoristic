@@ -2,7 +2,7 @@
 % Please edit documentation in R/aoristic2.datacheck.R
 \name{aoristic2.datacheck}
 \alias{aoristic2.datacheck}
-\title{Checks a data set for aoristic logical errors}
+\title{Check input data}
 \usage{
 aoristic2.datacheck(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 }
@@ -18,10 +18,16 @@ aoristic2.datacheck(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 \item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.}
 }
 \value{
-A data frame with logical errors from an aoristic data check
+A data frame flagging any problems or logical errors from an aoristic data check
 }
 \description{
-Checks a data set for aoristic logical errors
+The aoristic2.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
+these data can be messy or inaccurately recorded (such as crime data from some police departments). This
+function checks for two common problem and reports the problem in a column labeled 'aoristic_datacheck'.
+Rows with missing data for the End (or To) event are flagged with '1'. Rows with illogical data where the
+end datetime occurs before the start datetime are flagged '2'. Note that the aoristic2.df function will 
+still function with these problems, but events flagged '1' will be assigned a default time span of one
+hour, and events flagged '2' will be skipped.
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
