@@ -1,11 +1,15 @@
 #' Check input data
 #' 
-#' The aoristic2.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
+#' The aoristic.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
 #' these data can be messy or inaccurately recorded (such as crime data from some police departments). This
-#' function checks for two common problem and reports the problem in a column labeled 'aoristic_datacheck'.
-#' Rows with missing data for the End (or To) event are flagged with '1'. Rows with illogical data where the
-#' end datetime occurs before the start datetime are flagged '2'. Note that the aoristic2.df function will 
-#' still function with these problems, but events flagged '1' will be assigned a default time span of one
+#' function checks for two common problems and reports the result in a column labeled 'aoristic_datacheck'.
+#' Rows with missing data for the End (or To) event are flagged with '1'. 
+#' 
+#' Rows with illogical data where the #' end datetime occurs before the start datetime are 
+#' flagged '2'. 
+#' 
+#' Note that the aoristic.df function will #' still function with these 
+#' problems, but events flagged '1' will be assigned a default time span of one
 #' hour, and events flagged '2' will be skipped. 
 #'
 #' @param data1 data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time
@@ -14,6 +18,8 @@
 #' @param DateTimeFrom a  vector of the column name for FromDateTime (POSIXct date-time object)
 #' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.
 #' @return A data frame flagging any problems or logical errors from an aoristic data check
+#' @examples 
+#' datacheck.df <- aoristic.datacheck(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
 #' @import lubridate
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
@@ -69,7 +75,7 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
         txt <- paste(txt, " ******    In the aoristic.datacheck data frame these rows are marked in a column", 
             "\n", sep = "")
         txt <- paste(txt, " ******    with NA values = 1 and logical error values = 2", "\n", sep = "")
-        txt <- paste(txt, " ******    See the aoristic.datacheck column.", "\n", sep = "")
+        txt <- paste(txt, " ******    See the aoristic.datacheck column. Also see ?aoristic.datacheck", "\n", sep = "")
         
     } else {
         txt <- paste("\n", " ****** Aoristic data check:", "\n", sep = "")

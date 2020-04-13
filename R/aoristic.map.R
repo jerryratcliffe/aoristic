@@ -5,14 +5,16 @@
 #' selected hour. Each event is color coded to represent the aoristic weight, range ~0.006 to 1. Events
 #' with weight 1 definitely occurred during that hour, while events with values at the lower end of the
 #' range could have occured at one of many hours. For guidance on which day/hour is represented by a
-#' number, use aoristic2.ref()
+#' number, use aoristic.ref()
 #'
-#' @param data1 a data frame output from the aoristic2.df function
+#' @param data1 a data frame output from the aoristic.df function
 #' @param AorHour user-selected number for an hour in the week (range 1-168)
 #' @return A ggplot object
 #' @import ggplot2
 #' @examples 
+#' \dontrun{
 #' aor.plot <- aoristic.map(aor.df, '25')
+#' }
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 

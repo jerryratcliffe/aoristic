@@ -3,11 +3,14 @@
 #' Takes the output from the aoristic2.summary() function and converts that data frame
 #' into a series of eight charts for each day of the week (and a total chart) based on the
 #' aggregate aoristic distribution of the events. 
-#' Option (marks='T') adds small tick marks showing the (y-axis adjusted) overall weekly 
+#' Option (marks = TRUE) adds small tick marks showing the (y-axis adjusted) overall weekly 
 #' distribution for comparison to the daily value. 
 #' 
 #' @param data1 a data frame output from the aoristic2.df function
-#' @param marks marks='T' to show tick marks for week distribution. Leave blank otherwise.
+#' @param marks marks= TRUE to show tick marks for week distribution. Leave blank otherwise.
+#' @examples 
+#' aoristic.graph(aoristicsummary)
+#' aoristic.graph(aoristicsummary, TRUE)
 #' @export
 #' @import grid
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
@@ -16,10 +19,10 @@
 
 
 
-aoristic.graph <- function(data1, marks = "") {
+aoristic.graph <- function(data1, marks = FALSE) {
     
     plots.df <- data1[, c(1, 3, 4, 5, 6, 7, 8, 2)]  # Reorder columns to put weekend at the end
-    all.dots <- ifelse(marks == "T", T, F)  # T = Show small dots with 'all' distribution
+    all.dots <- ifelse(marks == TRUE, T, F)  # T = Show small dots with 'all' distribution
     
     plots.df$all <- as.numeric(plots.df$Sun) + as.numeric(plots.df$Mon) + as.numeric(plots.df$Tue)
     plots.df$all <- plots.df$all + as.numeric(plots.df$Wed) + as.numeric(plots.df$Thu)

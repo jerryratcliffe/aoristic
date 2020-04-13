@@ -1,4 +1,4 @@
-Package: aoristic2
+Package: aoristic
 Type: Package
 Title: Generates aoristic outputs from start and end date/time fields for incidents
 Version: 0.1.0
@@ -16,6 +16,8 @@ Description: It can sometimes be difficult to ascertain when some events (such a
     For more information see:
     Ratcliffe, JH (2002) Aoristic signatures and the temporal analysis of high volume crime patterns, 
     Journal of Quantitative Criminology. 18 (1): 23-43.
+    Note: This package replaces an original 'aoristic' package by George Kikuchi that has been deprecated
+    with his approval. 
 License: GPL-3
 Encoding: UTF-8
 Imports: foreign, formattable, openxlsx, ggplot2, grid, lubridate, htmltools

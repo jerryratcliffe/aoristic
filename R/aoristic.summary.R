@@ -14,9 +14,11 @@
 #' @param output output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise
 #' @return A data frame with aoristic values summed for each hour of the week
 #' @examples 
-#' aor.sum <- aoristic.summary(aor.df)
-#' aor.sum <- aoristic.summary(aor.df, output = 'xlsx')
-#' aor.sum <- aoristic.summary(aor.df, output = 'jpg')
+#' \dontrun
+#' aor.summary <- aoristic.summary(aor.df)
+#' aor.summary <- aoristic.summary(aor.df, 'xlsx')
+#' aor.summary <- aoristic.summary(aor.df, 'jpg')
+#' }
 #' @import formattable htmltools
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
