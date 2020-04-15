@@ -30,12 +30,12 @@ Rows with missing data for the End (or To) event are flagged with '1'.
 Rows with illogical data where the #' end datetime occurs before the start datetime are 
 flagged '2'. 
 
-Note that the aoristic.df function will #' still function with these 
+Note that the aoristic.df function will still function with these 
 problems, but events flagged '1' will be assigned a default time span of one
 hour, and events flagged '2' will be skipped.
 }
 \examples{
-datacheck.df <- aoristic.datacheck(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
+datacheck.df <- aoristic.datacheck(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

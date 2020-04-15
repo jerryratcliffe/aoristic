@@ -1,20 +1,21 @@
 #' Summarize weekly aoristic weights
 #'
-#' Summarizes the aoristic sums for each hour of the week, based on output from an aoristic data 
-#' frame (created by aoristic2.df). The function returns a data frame, with optional outputs. 
-#' Option 'xlsx' sends the data frame to an Excel spreadsheet in the #' same folder as the source 
-#' data. Filenames increment to prevent overwriting previous analyses. Using #' option 'jpg' 
+#' Summarizes the sum of aoristic weights for each hour of the week, based on output from an aoristic data 
+#' frame (created by aoristic.df). The function returns a data frame, with optional outputs. 
+#' Option 'xlsx' sends the data frame to an Excel spreadsheet in the same folder as the source 
+#' data. Filenames increment to prevent overwriting previous analyses. Using option 'jpg' 
 #' creates a color coded summary table in jpg format in the same folder as the source data.
 #' The filename is aoristic_distribution.jpg and it will overwrite previous files of the same name.
+#' The function will attempt to open the jpg file for the user. 
 #'  
-#' NOTE: Be aware that the distribution of values is NOT the same as the aoristic2.ref() output, because
-#' the summary charts and graphs here move Sunday to the end of the week to keep the weekend together.
+#' NOTE: Be aware that the distribution of values is NOT the same as the aoristic.ref() output, because
+#' the summary charts and graphs  move Sunday to the end of the week to keep the weekend together.
 #' 
-#' @param data1 a data frame output from the aoristic2.df function
+#' @param data1 a data frame output from the aoristic.df function
 #' @param output output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise
 #' @return A data frame with aoristic values summed for each hour of the week
 #' @examples 
-#' \dontrun
+#' \dontrun{
 #' aor.summary <- aoristic.summary(aor.df)
 #' aor.summary <- aoristic.summary(aor.df, 'xlsx')
 #' aor.summary <- aoristic.summary(aor.df, 'jpg')
@@ -55,8 +56,9 @@ aoristic.summary <- function (data1, output = ""){
     rm(df3)
 
 
-    # OPTIONAL OUTPUTS HERE
-    # If the user wants the output the an Excel xlsx file they use the switch output='xlsx'
+# Optional outputs --------------------------------------------------------
+    
+    # EXCEL OUTPUT: Switch output='xlsx'
     if (output == "xlsx")
     {
         current.folder <- getwd()
@@ -64,7 +66,6 @@ aoristic.summary <- function (data1, output = ""){
         output.file <- paste(current.folder, '/Aoristic_summary_', filenum.inc, '.xlsx',sep='')
 
         # If user already has a _X file, increment until we have a free _X filename available
-
         while (file.exists(output.file)) {
           filenum.inc <- filenum.inc + 1
           output.file <- paste(current.folder, '/Aoristic_summary_', filenum.inc, '.xlsx',sep='')
@@ -77,52 +78,49 @@ aoristic.summary <- function (data1, output = ""){
         message(txt1)
     }
 
-
-
-    # CREATE THE TABLE for the Viewer window
-
-    export_formattable <- function(f, file, width = "600px", height = NULL,
-                                   background = "white", delay = 0.2)
-    {
-      w <- as.htmlwidget(f, width = width, height = height)
-      path <- htmltools::html_print(w, background = background, viewer = NULL)
-      url <- paste0("file:///", gsub("\\\\", "/", normalizePath(path)))
-      webshot::webshot(url,
-              file = file,
-              selector = ".formattable_widget",
-              delay = delay)
-    }
-
-
-    custom_color_tile <- function (...)
-    {
-      formatter("span",
-
-                style = function(x) style(display = "block",
-                                          padding = "0 1px",
-                                          `color` = "white",
-                                          #`width`  = "10px",
-                                          `border-radius` = "1px",
-                                          `background-color` = csscolor(gradient(as.numeric(x),
-                                                                                 ...))))
-    }
-    format.table  <- formattable(df4,
-                                 align = c("l",rep("c", ncol(df4) - 1)),
-                                 list(
-                                   `Range` = formatter("span", style = ~ style(color = "grey",font.weight = "bold")),
-                                   area(col = 2:8) ~ custom_color_tile("#CCE5FF", '#A90303'))
-    )
-
+    # JPG OUTPUT: Switch output='jpg'
     if (output == "jpg"){
-          export_formattable(format.table,"aoristic_distribution.jpg")
-          # webshot::install_phantomjs()
-          viewer <- getOption("viewer")
-          htmlFile <- paste(getwd(), "/aoristic_distribution.jpg", sep='')
-          viewer(htmlFile)
-          txt1 <- paste('\n****** Aoristic summary grid in jpg format written to: \n',htmlFile, sep='       ')
-          message(txt1)
+      
+      export_formattable <- function(f, file, width = "600px", height = NULL,
+                                     background = "white", delay = 0.2)
+      {
+        w <- as.htmlwidget(f, width = width, height = height)
+        path <- htmltools::html_print(w, background = background, viewer = NULL)
+        url <- paste0("file:///", gsub("\\\\", "/", normalizePath(path)))
+        webshot::webshot(url,
+                file = file,
+                selector = ".formattable_widget",
+                delay = delay)
+      }
+  
+  
+      custom_color_tile <- function (...)
+      {
+        formatter("span",
+  
+                  style = function(x) style(display = "block",
+                                            padding = "0 1px",
+                                            `color` = "white",
+                                            #`width`  = "10px",
+                                            `border-radius` = "1px",
+                                            `background-color` = csscolor(gradient(as.numeric(x),
+                                                                                   ...))))
+      }
+      
+      format.table  <- formattable(df4,
+                                   align = c("l",rep("c", ncol(df4) - 1)),
+                                   list(
+                                     `Range` = formatter("span", style = ~ style(color = "grey",font.weight = "bold")),
+                                     area(col = 2:8) ~ custom_color_tile("#CCE5FF", '#A90303'))
+                        )
+  
+            export_formattable(format.table,"aoristic_distribution.jpg")
+            # webshot::install_phantomjs()
+            viewer <- getOption("viewer")
+            htmlFile <- paste(getwd(), "/aoristic_distribution.jpg", sep='')
+            viewer(htmlFile)
+            txt1 <- paste('\n****** Aoristic summary grid in jpg format written to: \n',htmlFile, sep='       ')
+            message(txt1)
     }
-
-
   return(df4)
 }

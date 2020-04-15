@@ -18,23 +18,23 @@ aoristic.df(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 \item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.}
 }
 \value{
-Returns a data frame with aoristic values for each hour of the week for each input row
+A data frame with aoristic values for each hour of the week for each row
 }
 \description{
-Calculates aoristic weights across 168 units representing each hour of the week (24 hours x 7 days). 
+Calculates aoristic proportional weights across 168 units representing each hour of the week (24 hours x 7 days). 
 It is designed for situations when an event time is not know but could be spread across numerous
 hours or days, and is represented by a Start (or From) date and time, and an End (or To) date and time.
 The output retains the source data, and can be reimported into a GIS for spatial analysis. The output 
-from this function is used in other aoristic2 library functions.
+from this function is used in other aoristic library functions.
 }
 \details{
-NOTE: Events with no recorded End (or To) datetime will be given a default time span of one hour from
-the Start (of From) datetime. Events with start datetime events after the end datetime will be 
+NOTE: Events with no recorded End/To datetime will be given a default time span of one hour from
+the Start/From datetime. Events with start datetime events after the end datetime will be 
 ignored. Events with time spans lasting more than one week (>168 hours) will default to a time span of
 168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
 }
 \examples{
-df <- aoristic.df(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
+df <- aoristic.df(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

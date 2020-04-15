@@ -1,8 +1,8 @@
 #' Hour of the week reference chart
 
-#' Creates and opens a simple data frame with reference hour of the week. 
-#' This is a useful reference for the aoristic2.map function that requires a designated hour
-#' in order to map the requested one hour time period. 
+#' Creates and views a simple data frame with reference hour of the week. 
+#' This is a reference for the aoristic.map function that requires a user-selected hour
+#' in order to map spatial distribution for the requested one hour time period. 
 #' 
 #' NOTE: The charts from aoristic.summary do not use the same day/hour layout - they move Sunday 
 #' to the end of the layout to make the weekend period clearer to the user. 
@@ -10,9 +10,6 @@
 #' @return A data frame with hours of the week referenced
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
-
-# Some useful keyboard shortcuts for package authoring: Install Package: 'Ctrl + Shift + B' Check
-# Package: 'Ctrl + Shift + E' Test Package: 'Ctrl + Shift + T'
 
 aoristic.ref <- function() {
     

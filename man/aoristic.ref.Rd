@@ -3,9 +3,9 @@
 \name{aoristic.ref}
 \alias{aoristic.ref}
 \title{Hour of the week reference chart
-Creates and opens a simple data frame with reference hour of the week. 
-This is a useful reference for the aoristic2.map function that requires a designated hour
-in order to map the requested one hour time period.}
+Creates and views a simple data frame with reference hour of the week. 
+This is a reference for the aoristic.map function that requires a user-selected hour
+in order to map spatial distribution for the requested one hour time period.}
 \usage{
 aoristic.ref()
 }

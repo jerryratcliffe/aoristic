@@ -9,18 +9,18 @@ aoristic.graph(data1, marks = FALSE)
 \arguments{
 \item{data1}{a data frame output from the aoristic2.df function}
 
-\item{marks}{marks= TRUE to show tick marks for week distribution. Leave blank otherwise.}
+\item{marks}{marks=FALSE. Use True to show tick marks for week distribution. Leave blank otherwise.}
 }
 \description{
-Takes the output from the aoristic2.summary() function and converts that data frame
+Takes the output from the aoristic.summary() function and converts that data frame
 into a series of eight charts for each day of the week (and a total chart) based on the
 aggregate aoristic distribution of the events. 
 Option (marks = TRUE) adds small tick marks showing the (y-axis adjusted) overall weekly 
 distribution for comparison to the daily value.
 }
 \examples{
-aoristic.graph(aoristicsummary)
-aoristic.graph(aoristicsummary, TRUE)
+aoristic.graph(dcburgsum)
+aoristic.graph(dcburgsum, TRUE)
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

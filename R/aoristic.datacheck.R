@@ -8,7 +8,7 @@
 #' Rows with illogical data where the #' end datetime occurs before the start datetime are 
 #' flagged '2'. 
 #' 
-#' Note that the aoristic.df function will #' still function with these 
+#' Note that the aoristic.df function will still function with these 
 #' problems, but events flagged '1' will be assigned a default time span of one
 #' hour, and events flagged '2' will be skipped. 
 #'
@@ -19,7 +19,7 @@
 #' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.
 #' @return A data frame flagging any problems or logical errors from an aoristic data check
 #' @examples 
-#' datacheck.df <- aoristic.datacheck(dcburglaries, "X", "Y", "StartDateTime", "EndDateTime")
+#' datacheck.df <- aoristic.datacheck(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 #' @import lubridate
 #' @export
 #' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
@@ -47,7 +47,7 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     }
     
     duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to))
-    df1$duration <- duration/dhours(1)  # This is the exact duration in fractions of hours
+    df1$duration <- duration%/%dminutes(1)  # This is the modelo exact duration in minutes, rounded down
     
     df1["aoristic_datacheck"] <- 0  #Create a datacheck column to hold results
     
@@ -59,32 +59,23 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     
     if (rowsWith_NA_error > 0 || rowsWith_DT_error > 0) {
         
-        txt <- paste("\n", " ****** Aoristic data check:", "\n", sep = "")
-        txt <- paste(txt, " ****** ", rowsWith_NA_error, " row(s) had no END/TO datetime value. In an aoristic analysis", 
+        txt <- paste("\n", " ------ Aoristic data check --------------------", "\n", sep = "")
+        txt <- paste(txt, "     ", rowsWith_NA_error, " row(s) found with no END/TO datetime. In aoristic.df() the START/FROM ", "\n", sep = "")
+        txt <- paste(txt, "        datetime will be treated as the event time.", "\n", sep = "")
+        txt <- paste(txt, "     ", rowsWith_DT_error, " row(s) found with a logical error where the START/FROM datetime was -after-", "\n", sep = "")
+        txt <- paste(txt, "        the END/TO datetime. In aoristic.df() this will default to the Start/From time", "\n", sep = "")
+        txt <- paste(txt, "        only and will be treated as having occurred at that specific time.", "\n", sep = "")
+        txt <- paste(txt, "        ", "\n", sep = "")
+        txt <- paste(txt, "        In the aoristic.datacheck data frame these rows are marked in a column", 
             "\n", sep = "")
-        txt <- paste(txt, " ******    the START/FROM datetime will be passed to the END/TO column, and", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    the event duration will default to one hour.", "\n", sep = "")
-        txt <- paste(txt, " ****** ", rowsWith_DT_error, " row(s) had a logical error where the START/FROM datetime was *after*", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    the END/TO value. In an aoristic analysis this will default to a", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    duration of zero hours and be effectively ignored in the analysis.", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    ", "\n", sep = "")
-        txt <- paste(txt, " ******    In the aoristic.datacheck data frame these rows are marked in a column", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    with NA values = 1 and logical error values = 2", "\n", sep = "")
-        txt <- paste(txt, " ******    See the aoristic.datacheck column. Also see ?aoristic.datacheck", "\n", sep = "")
+        txt <- paste(txt, "        with NA values = 1 and logical error values = 2", "\n", sep = "")
+        txt <- paste(txt, "        See the aoristic.datacheck column. Also see ?aoristic.datacheck", "\n", sep = "")
         
     } else {
-        txt <- paste("\n", " ****** Aoristic data check:", "\n", sep = "")
-        txt <- paste(txt, " ******    Congratulations!", "\n", sep = "")
-        txt <- paste(txt, " ******    The data check did not find any missing data in the END/TO column,", 
-            "\n", sep = "")
-        txt <- paste(txt, " ******    and did not find any logical errors in the date sequence.", "\n", 
-            sep = "")
-        
+        txt <- paste("\n", " ------ Aoristic data check --------------------", "\n", sep = "") 
+        txt <- paste(txt, "         Congratulations!", "\n", sep = "")
+        txt <- paste(txt, "         The data check did not find any missing data in the END/TO column,", "\n", sep = "")
+        txt <- paste(txt, "         and did not find any logical errors in the date sequence.", "\n", sep = "")
     }
     aoristic.datacheck <- df1
     message(txt)

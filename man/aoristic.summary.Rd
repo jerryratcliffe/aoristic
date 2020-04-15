@@ -7,7 +7,7 @@
 aoristic.summary(data1, output = "")
 }
 \arguments{
-\item{data1}{a data frame output from the aoristic2.df function}
+\item{data1}{a data frame output from the aoristic.df function}
 
 \item{output}{output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise}
 }
@@ -15,15 +15,23 @@ aoristic.summary(data1, output = "")
 A data frame with aoristic values summed for each hour of the week
 }
 \description{
-Summarizes the aoristic sums for each hour of the week, based on output from an aoristic data 
-frame (created by aoristic2.df). The function returns a data frame, with optional outputs. 
-Option 'xlsx' sends the data frame to an Excel spreadsheet in the #' same folder as the source 
-data. Filenames increment to prevent overwriting previous analyses. Using #' option 'jpg' 
+Summarizes the sum of aoristic weights for each hour of the week, based on output from an aoristic data 
+frame (created by aoristic.df). The function returns a data frame, with optional outputs. 
+Option 'xlsx' sends the data frame to an Excel spreadsheet in the same folder as the source 
+data. Filenames increment to prevent overwriting previous analyses. Using option 'jpg' 
 creates a color coded summary table in jpg format in the same folder as the source data.
 The filename is aoristic_distribution.jpg and it will overwrite previous files of the same name.
+The function will attempt to open the jpg file for the user. 
  
-NOTE: Be aware that the distribution of values is NOT the same as the aoristic2.ref() output, because
-the summary charts and graphs here move Sunday to the end of the week to keep the weekend together.
+NOTE: Be aware that the distribution of values is NOT the same as the aoristic.ref() output, because
+the summary charts and graphs  move Sunday to the end of the week to keep the weekend together.
+}
+\examples{
+\dontrun{
+aor.summary <- aoristic.summary(aor.df)
+aor.summary <- aoristic.summary(aor.df, 'xlsx')
+aor.summary <- aoristic.summary(aor.df, 'jpg')
+}
 }
 \references{
 Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.

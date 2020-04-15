@@ -2,7 +2,7 @@
 % Please edit documentation in R/aoristic.map.R
 \name{aoristic.map}
 \alias{aoristic.map}
-\title{Plot aoristic distributions for one hour}
+\title{Plot aoristic probabilities for one hour}
 \usage{
 aoristic.map(data1, AorHour = "1")
 }
@@ -15,16 +15,16 @@ aoristic.map(data1, AorHour = "1")
 A ggplot object
 }
 \description{
-Creates a plot showing aoristic values for one hour of the week. The X, Y coordinate pair (or latitude
+Creates a plot showing aoristic probability values for one hour of the week. The X, Y coordinate pair (or latitude
 and longitude) are used to create a plot that shows each event that could have occured in the user-
-selected hour. Each event is color coded to represent the aoristic weight, range ~0.006 to 1. Events
+selected hour. Each event is color coded to represent the aoristic weight, range >0 to 1. Events
 with weight 1 definitely occurred during that hour, while events with values at the lower end of the
 range could have occured at one of many hours. For guidance on which day/hour is represented by a
 number, use aoristic.ref()
 }
 \examples{
 \dontrun{
-aor.plot <- aoristic.map(aor.df, '25')
+aor.plot <- aoristic.map(aor.df, 25)
 }
 }
 \references{
