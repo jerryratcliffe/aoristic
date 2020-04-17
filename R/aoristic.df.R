@@ -43,6 +43,7 @@ aoristic.df <- function
     myMessages = "T"
     
     
+    
     if (!class(df1$datetime_from)[1] == "POSIXct") {
         stop("The DateTimeFrom field is not a POSIXct object. Convert with the lubridate package before using this function")
     }
@@ -55,46 +56,46 @@ aoristic.df <- function
     
     # USER DATA ERROR CHECKING Adjust the dataset where the user does not have a datetime_to value ( = NA)
     # This catches where the user only has a from/start date. This can occur when the event time is known.
-    # Adjust the event duration to be one minute and warn the user. 
-    errors_missing <- sum(is.na(df1[, 4]))
+    # Adjust the event duration to be one minute and warn the user.
+    errors_missing_count <- plyr::count(is.na(df1[, 4]))
+    errors_missing <- subset(errors_missing_count, x == TRUE)$freq
     if (errors_missing > 0) {
-        {
-            txt <- paste(" **** WARNING: ", errors_missing, " row(s) were missing END/TO datetime values.", "\n", sep = "")
-            txt <- paste(txt, "               The START/FROM datetime will be used as the event time. ", "\n", sep = "")
-            txt <- paste(txt, "               Use `aoristic.datacheck` to identify these rows.", "\n", sep = "")
-            message(txt)
-            df1$duration[is.na(df1$datetime_to)] <- 1  # If duration missing default to one minute
-        }
+        txt <- paste(" **** WARNING: ", errors_missing, " row(s) were missing END/TO datetime values.", "\n", sep = "")
+        txt <- paste(txt, "               The START/FROM datetime will be used as the event time. ", "\n", sep = "")
+        txt <- paste(txt, "               Use `aoristic.datacheck` to identify these rows.", "\n", sep = "")
+        message(txt)
+        df1$duration[is.na(df1$datetime_to)] <- 1  # If duration missing default to one minute
     }
     
     # USER DATA ERROR CHECKING I will adjust the dataset where the real duration is < 0 This catches when
     # the user inadvertently has FROM datetimes that are later than the TO datetime. This is deemed to be an
     # error and the event is set with a zero duration and is effectively ignored. Warn the user here.
-    errors_logic <- sum(df1[, 5] < 0)
+    
+    errors_logic_count <- plyr::count(df1[, 5] < 0)
+    errors_logic <- subset(errors_logic_count, x == TRUE)$freq
     if (errors_logic > 0) {
-        {
-            txt <- paste(" **** WARNING: ", errors_logic, " row(s) have illogical FROM and TO ordered values.", "\n", sep = "")
-            txt <- paste(txt, "               This means the FROM datetime is later than the TO datetime.", "\n", sep = "")
-            txt <- paste(txt, "               Use `aoristic.datacheck` to identify these rows.",  "\n", sep = "")
-            message(txt)
-        }
+        txt <- paste(" **** WARNING: ", errors_logic, " row(s) have illogical FROM and TO ordered values.", "\n", sep = "")
+        txt <- paste(txt, "               This means the FROM datetime is later than the TO datetime.", "\n", sep = "")
+        txt <- paste(txt, "               Use `aoristic.datacheck` to identify these rows.",  "\n", sep = "")
+        message(txt)
     }
+    
     
     # Create a new dataframe with 168 columns for each day/hour and label them. 
     df2 <- data.frame(matrix(0, ncol = 168, nrow = nrow(df1)))
-    if (myMessages) {
-        message("     Please wait... The aoristic data frame can take a while to create...")
-    }
     
     for (i in 1:168) {  
         names(df2)[i] <- paste("hour", i, sep = "") 
     }
     df1 <- cbind(df1, df2)  # Bind the source data to the hours matrix
     rm(df2)                 # Tidy up data.frame
+    if (myMessages) {
+        message("     Please wait... The aoristic data frame can take a while to create...")
+    }
     
-
-# Loop each data row and allocate aoristic probability --------------------
-
+    
+    # Loop each data row and allocate aoristic probability --------------------
+    
     for (i in 1:nrow(df1)) {
         from.day <- wday(df1[i, 'datetime_from'])               # The day number for the start date
         from.hour <- hour(df1[i, 'datetime_from'])              # The hour number for the start hour
@@ -104,6 +105,12 @@ aoristic.df <- function
         left.in.hour <- 60 - minute(df1[i, 'datetime_from'])    # For when start hour begins > :00
         aor.minute <- 1/time.span                               # Aoristic weight per minute
         
+        # Catch the rare occurrence when there is no START date-time
+        if (is.na(from.day)){
+            txt <- paste("     WARNING: No START date-time found in row ",i,". Row will be ignored.", sep='')
+            message(txt)
+            next
+        }
         
         if (time.span >= 10080) {                       
             # Event duration > one week. Increments each day/hour equally.
@@ -158,6 +165,7 @@ aoristic.df <- function
             }
         }
     }  
+    
     
     
     if (myMessages) {
