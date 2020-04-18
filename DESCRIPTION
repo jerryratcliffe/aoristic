@@ -23,7 +23,8 @@ Encoding: UTF-8
 Imports: foreign, formattable, openxlsx, ggplot2, grid, lubridate, htmltools
 Suggests: 
     webshot,
-    testthat
+    testthat,
+    plyr
 LazyData: true
 RoxygenNote: 7.1.0
 Depends: 

@@ -54,7 +54,11 @@ aoristic.summary <- function (data1, output = ""){
     df4 <- data.frame(df4,df3)
     df4 <- df4[, c(1, 3, 4, 5, 6, 7, 8, 2)] # Reorder columns to put weekend at the end
     rm(df3)
+    for (j in 2:8){# recode hours as numeric
+      df4[ ,j] <- as.numeric(df4[, j])
+    }
 
+    
 
 # Optional outputs --------------------------------------------------------
     

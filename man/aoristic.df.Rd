@@ -15,7 +15,7 @@ aoristic.df(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 
 \item{DateTimeFrom}{a vector of the column name for FromDateTime (POSIXct date-time object)}
 
-\item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.}
+\item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object)}
 }
 \value{
 A data frame with aoristic values for each hour of the week for each row

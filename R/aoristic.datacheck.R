@@ -1,16 +1,18 @@
-#' Check input data
+#' Check aoristic input data
+#' 
+#' A function that flags datetime errors with aoristic input data. 
 #' 
 #' The aoristic.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
 #' these data can be messy or inaccurately recorded (such as crime data from some police departments). This
-#' function checks for two common problems and reports the result in a column labeled 'aoristic_datacheck'.
-#' Rows with missing data for the End (or To) event are flagged with '1'. 
+#' function checks for common problems and reports the result in a column labeled 'aoristic_datacheck'.
 #' 
-#' Rows with illogical data where the #' end datetime occurs before the start datetime are 
-#' flagged '2'. 
+#' Rows with missing 'End' information are flagged with '1' and counted in the console.
+#' Rows where the 'End' datetime occurs before the 'Start' datetime are flagged '2'. 
 #' 
-#' Note that the aoristic.df function will still function with these 
-#' problems, but events flagged '1' will be assigned a default time span of one
-#' hour, and events flagged '2' will be skipped. 
+#' Note that aoristic.df() will still run even with the data issues. Where the 'End'
+#' datetime is missing, the aoristic value will be assigned to the 'Start' datetime hour.
+#' When the 'End' datetime comes before the 'Start' datetime, the 'Start' datetime is only used
+#' and again, the aoristic value is assigned to the 'Start' datetime hour. 
 #'
 #' @param data1 data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time
 #' @param Xcoord a vector of the X coordinate or latitude (passed through for user)
@@ -30,6 +32,8 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     if (!is.data.frame(data1)) {
         stop("The input data frame specified is not a data.frame object")
     }
+    
+    x_lon <- y_lat <- NULL
     
     # Build a local data.frame and populate with passed arguments
     df1 <- data.frame(matrix(ncol = 4, nrow = nrow(data1)))
@@ -53,32 +57,47 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     
     df1$aoristic_datacheck[is.na(df1$datetime_to)] <- 1  # Mark no *TO* datetime values with 1
     df1$aoristic_datacheck[df1$duration < 0] <- 2  # Mark illogical from/to combinations with 2
-    
     rowsWith_NA_error <- sum(df1$aoristic_datacheck == 1)
     rowsWith_DT_error <- sum(df1$aoristic_datacheck == 2)
     
+    errors.coord <- sum(is.na(df1$x_lon) | is.na(df1$y_lat))
+    errors.zero <- nrow(subset(df1, x_lon == 0 | y_lat == 0))
+    
+    txt <- "\n---- Aoristic data check -------------------------------------------\n"
     if (rowsWith_NA_error > 0 || rowsWith_DT_error > 0) {
+        txt <- paste(txt, "     ", rowsWith_NA_error, " rows were missing END/TO datetime values.", "\n", sep = "")
+        txt <- paste(txt, "     ", rowsWith_DT_error, " rows had END/TO datetimes before START/FROM datetimes.", "\n", sep = "")
         
-        txt <- paste("\n", " ------ Aoristic data check --------------------", "\n", sep = "")
-        txt <- paste(txt, "     ", rowsWith_NA_error, " row(s) found with no END/TO datetime. In aoristic.df() the START/FROM ", "\n", sep = "")
-        txt <- paste(txt, "        datetime will be treated as the event time.", "\n", sep = "")
-        txt <- paste(txt, "     ", rowsWith_DT_error, " row(s) found with a logical error where the START/FROM datetime was -after-", "\n", sep = "")
-        txt <- paste(txt, "        the END/TO datetime. In aoristic.df() this will default to the Start/From time", "\n", sep = "")
-        txt <- paste(txt, "        only and will be treated as having occurred at that specific time.", "\n", sep = "")
-        txt <- paste(txt, "        ", "\n", sep = "")
-        txt <- paste(txt, "        In the aoristic.datacheck data frame these rows are marked in a column", 
-            "\n", sep = "")
-        txt <- paste(txt, "        with NA values = 1 and logical error values = 2", "\n", sep = "")
-        txt <- paste(txt, "        See the aoristic.datacheck column. Also see ?aoristic.datacheck", "\n", sep = "")
+        txt <- paste(txt, "     In the aoristic.datacheck data frame these rows are indicated", 
+                     "\n", sep = "")
+        txt <- paste(txt, "     with missing end datetimes = 1 and start/end logical errors = 2", "\n", sep = "")
+        txt <- paste(txt, "     See the aoristic.datacheck column. Also see ?aoristic.datacheck", "\n", sep = "")
         
     } else {
-        txt <- paste("\n", " ------ Aoristic data check --------------------", "\n", sep = "") 
-        txt <- paste(txt, "         Congratulations!", "\n", sep = "")
-        txt <- paste(txt, "         The data check did not find any missing data in the END/TO column,", "\n", sep = "")
-        txt <- paste(txt, "         and did not find any logical errors in the date sequence.", "\n", sep = "")
+        txt <- paste(txt, "     Congratulations!", "\n", sep = "")
+        txt <- paste(txt, "     Data check did not find any missing data in the END/TO column,", "\n", sep = "")
+        txt <- paste(txt, "     and did not find any logical errors in the date sequence.", "\n", sep = "")
     }
-    aoristic.datacheck <- df1
     message(txt)
+    txt <- ''
+    
+    if (errors.coord > 0 || errors.zero > 0 ){
+        message("     Coordinates check:")
+        if (errors.coord > 0){
+            txt <- paste(txt, "     ", errors.coord, " rows missing spatial coordinates.", "\n", sep = "")
+        }
+        if (errors.zero > 0){
+            txt <- paste(txt, "     ", errors.zero, " rows had a zero spatial coordinate.", "\n", sep = "")
+        }
+    } else{
+        message("     Coordinates check: No missing or zero coordinates.\n")
+        
+    }
+    
+    message(txt)
+    
+    
+    aoristic.datacheck <- df1
     return(aoristic.datacheck)
 }
 

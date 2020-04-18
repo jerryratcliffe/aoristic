@@ -2,7 +2,7 @@
 % Please edit documentation in R/aoristic.datacheck.R
 \name{aoristic.datacheck}
 \alias{aoristic.datacheck}
-\title{Check input data}
+\title{Check aoristic input data}
 \usage{
 aoristic.datacheck(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 }
@@ -21,18 +21,20 @@ aoristic.datacheck(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 A data frame flagging any problems or logical errors from an aoristic data check
 }
 \description{
-The aoristic.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
-these data can be messy or inaccurately recorded (such as crime data from some police departments). This
-function checks for two common problems and reports the result in a column labeled 'aoristic_datacheck'.
-Rows with missing data for the End (or To) event are flagged with '1'.
+A function that flags datetime errors with aoristic input data.
 }
 \details{
-Rows with illogical data where the #' end datetime occurs before the start datetime are 
-flagged '2'. 
+The aoristic.df function handles data with Start (or From) and End (or To) datetime objects. Sometimes
+these data can be messy or inaccurately recorded (such as crime data from some police departments). This
+function checks for common problems and reports the result in a column labeled 'aoristic_datacheck'.
 
-Note that the aoristic.df function will still function with these 
-problems, but events flagged '1' will be assigned a default time span of one
-hour, and events flagged '2' will be skipped.
+Rows with missing 'End' information are flagged with '1' and counted in the console.
+Rows where the 'End' datetime occurs before the 'Start' datetime are flagged '2'. 
+
+Note that aoristic.df() will still run even with the data issues. Where the 'End'
+datetime is missing, the aoristic value will be assigned to the 'Start' datetime hour.
+When the 'End' datetime comes before the 'Start' datetime, the 'Start' datetime is only used
+and again, the aoristic value is assigned to the 'Start' datetime hour.
 }
 \examples{
 datacheck.df <- aoristic.datacheck(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
