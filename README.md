@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/jerryratcliffe/aoristic.svg?branch=master)](https://travis-ci.com/jerryratcliffe/aoristic)
 <!-- badges: end -->
 
 The goal of aoristic is to make some sense of temporally vague data. It

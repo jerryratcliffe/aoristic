@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # aoristic
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.com/jerryratcliffe/aoristic.svg?branch=master)](https://travis-ci.com/jerryratcliffe/aoristic)
 <!-- badges: end -->
 
 The goal of aoristic is to make some sense of temporally vague data. It can sometimes be difficult to ascertain when some events (such as property crime) occur because the victim is not present when the crime occurs. As a result, police databases often record a 'start' or 'from' date and time, and an 'end' or 'to' date and time. The 'start' datetime usually references when the victim last saw their stolen property, and the 'to' datetime records when they first discovered their property missing. The period between the 'start' datetime and 'end' datetime is referred to as the event’s ‘time span’. 

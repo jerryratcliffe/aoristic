@@ -20,11 +20,10 @@ Description: It can sometimes be difficult to ascertain when some events (such a
     with his permission. 
 License: GPL-3
 Encoding: UTF-8
-Imports: foreign, formattable, openxlsx, ggplot2, grid, lubridate, htmltools
+Imports: foreign, formattable, openxlsx, ggplot2, grid, lubridate, htmltools, plyr
 Suggests: 
     webshot,
-    testthat,
-    plyr
+    testthat
 LazyData: true
 RoxygenNote: 7.1.0
 Depends: 

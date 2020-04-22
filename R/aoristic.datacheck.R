@@ -44,10 +44,16 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     df1$datetime_to <- data1[, DateTimeTo]
     
     if (!class(df1$datetime_from)[1] == "POSIXct") {
-        stop("The DateTimeFrom field is not POSIXct object.  Use the lubridate package before using this function")
+        stop("The DateTimeFrom field is not POSIXct object. Use the lubridate package before using this function")
     }
     if (!class(df1$datetime_to)[1] == "POSIXct") {
-        stop("The DateTimeTo field is not POSIXct object.  Use the lubridate package before using this function")
+        stop("The DateTimeTo field is not POSIXct object. Use the lubridate package before using this function")
+    }
+    if  (is.numeric(df1$x_lon)[1] ==FALSE) {
+        stop("The X coordinate field is not a numeric object. Change the variable format before continuing")
+    }
+    if  (is.numeric(df1$y_lat)[1] ==FALSE) {
+        stop("The Y coordinate field is not a numeric object. Change the variable format before continuing")
     }
     
     duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to))
@@ -81,8 +87,8 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     message(txt)
     txt <- ''
     
+    message("     Coordinates check:")
     if (errors.coord > 0 || errors.zero > 0 ){
-        message("     Coordinates check:")
         if (errors.coord > 0){
             txt <- paste(txt, "     ", errors.coord, " rows missing spatial coordinates.", "\n", sep = "")
         }
@@ -90,12 +96,10 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
             txt <- paste(txt, "     ", errors.zero, " rows had a zero spatial coordinate.", "\n", sep = "")
         }
     } else{
-        message("     Coordinates check: No missing or zero coordinates.\n")
-        
+        txt <- "     No missing or zero coordinates.\n"
     }
-    
     message(txt)
-    
+
     
     aoristic.datacheck <- df1
     return(aoristic.datacheck)
