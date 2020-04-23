@@ -13,10 +13,11 @@
 #' @import ggplot2
 #' @examples 
 #' \dontrun{
+#' 
 #' aor.plot <- aoristic.map(aor.df, 25)
 #' }
 #' @export
-#' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+#' @references Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 
 
 aoristic.map <- function(data1, AorHour = "1") {
@@ -42,21 +43,21 @@ aoristic.map <- function(data1, AorHour = "1") {
     x.min <- min(mapdata[1], na.rm = TRUE)
     y.max <- max(mapdata[2], na.rm = TRUE)
     y.min <- min(mapdata[2], na.rm = TRUE)
-    x.max <- x.max + ((x.max-x.min)*.05)
-    x.min <- x.min - ((x.max-x.min)*.05)
-    y.max <- y.max + ((y.max-y.min)*.05)
-    y.min <- y.min - ((y.max-y.min)*.05)   
+    x.max <- x.max + ((x.max - x.min)*.05)
+    x.min <- x.min - ((x.max - x.min)*.05)
+    y.max <- y.max + ((y.max - y.min)*.05)
+    y.min <- y.min - ((y.max - y.min)*.05)   
     
     mapdata <- mapdata[mapdata[3] > 0, ]    # Limit the data to only rows with aoristic values >0
     
     # Write the title text
     day.num <- 1 + (chosenhour.num%/%24)  # integer divide operator finds the day
     if (day.num == 8) {
-        day.num = 7
+        day.num <- 7
     }
     hour.num <- (chosenhour.num%%24) - 1  # modulus operator finds the hour
     if (hour.num == -1) {
-        hour.num = 23
+        hour.num <- 23
     }
     temp.daywords <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
     title.txt <- paste("Aoristic values for", temp.daywords[day.num], "at hour ", sep = " ")
@@ -73,11 +74,10 @@ aoristic.map <- function(data1, AorHour = "1") {
     
     # create the ggplot map object
     map.plot <- ggplot(mapdata, aes(x = X, y = Y, colour = Aoristic.value)) + geom_point(size = 4, alpha = 0.6) + 
-        scale_x_continuous( limits = c(x.min, x.max), expand = c(0,0) ) +
-        scale_y_continuous( limits = c(y.min, y.max), expand = c(0,0) ) +
+        scale_x_continuous( limits = c(x.min, x.max), expand = c(0, 0) ) +
+        scale_y_continuous( limits = c(y.min, y.max), expand = c(0, 0) ) +
         my.color.pal + 
         labs(title = title.txt, x = "X coordinate or Longitude", y = "Y coordinate or Latitude")
    
     return(map.plot)
 }
-

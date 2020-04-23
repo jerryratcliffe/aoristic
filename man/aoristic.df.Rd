@@ -9,16 +9,16 @@ aoristic.df(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 \arguments{
 \item{data1}{data frame with a minimum of 4 columns with X, Y coords, Start and End date/time}
 
-\item{Xcoord}{a vector of the event X coordinate or latitude (passed through for user)}
+\item{Xcoord}{a vector of the event X coordinate or latitude (numeric object)}
 
-\item{Ycoord}{a vector of the event Y coordinate or longitude (passed through for user)}
+\item{Ycoord}{a vector of the event Y coordinate or longitude (numeric object)}
 
 \item{DateTimeFrom}{a vector of the column name for FromDateTime (POSIXct date-time object)}
 
 \item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object)}
 }
 \value{
-A data frame with aoristic values for each hour of the week for each row
+A data frame with aoristic values for each hour of the week for each observation
 }
 \description{
 Calculates aoristic proportional weights across 168 units representing each hour of the week (24 hours x 7 days). 
@@ -28,14 +28,14 @@ The output retains the source data, and can be reimported into a GIS for spatial
 from this function is used in other aoristic library functions.
 }
 \details{
-NOTE: Events with no recorded End/To datetime will be given a default time span of one hour from
-the Start/From datetime. Events with start datetime events after the end datetime will be 
-ignored. Events with time spans lasting more than one week (>168 hours) will default to a time span of
-168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
+NOTE: If an observation is missing the End/To datetime, the entire aoristic weight (1.0) will be assigned to the
+hour block containing the Start/From datetime. Events with start datetime events after the end datetime will also 
+be assigned to the hour block containing the Start/From datetime. Events with time spans lasting more than one 
+week (>168 hours) will default to a time span of 168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
 }
 \examples{
 df <- aoristic.df(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 }
 \references{
-Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 }

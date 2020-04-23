@@ -9,7 +9,8 @@ aoristic.summary(data1, output = "")
 \arguments{
 \item{data1}{a data frame output from the aoristic.df function}
 
-\item{output}{output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise}
+\item{output}{output ='xlsx' for an Excel format output
+#' output ='jpg' for JPG grid, blank otherwise}
 }
 \value{
 A data frame with aoristic values summed for each hour of the week
@@ -24,15 +25,16 @@ The filename is aoristic_distribution.jpg and it will overwrite previous files o
 The function will attempt to open the jpg file for the user. 
  
 NOTE: Be aware that the distribution of values is NOT the same as the aoristic.ref() output, because
-the summary charts and graphs  move Sunday to the end of the week to keep the weekend together.
+the summary charts and graphs move Sunday to the end of the week to keep the weekend together.
 }
 \examples{
 \dontrun{
+
 aor.summary <- aoristic.summary(aor.df)
 aor.summary <- aoristic.summary(aor.df, 'xlsx')
 aor.summary <- aoristic.summary(aor.df, 'jpg')
 }
 }
 \references{
-Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 }

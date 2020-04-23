@@ -15,16 +15,16 @@
 #' and again, the aoristic value is assigned to the 'Start' datetime hour. 
 #'
 #' @param data1 data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time
-#' @param Xcoord a vector of the X coordinate or latitude (passed through for user)
-#' @param Ycoord a vector of the Y coordinate or longitude (passed through for user)
+#' @param Xcoord a vector of the X coordinate or latitude (numeric object)
+#' @param Ycoord a vector of the Y coordinate or longitude (numeric object)
 #' @param DateTimeFrom a  vector of the column name for FromDateTime (POSIXct date-time object)
-#' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.
+#' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object)
 #' @return A data frame flagging any problems or logical errors from an aoristic data check
 #' @examples 
 #' datacheck.df <- aoristic.datacheck(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 #' @import lubridate
 #' @export
-#' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+#' @references Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 
 
 aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) {
@@ -49,15 +49,15 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     if (!class(df1$datetime_to)[1] == "POSIXct") {
         stop("The DateTimeTo field is not POSIXct object. Use the lubridate package before using this function")
     }
-    if  (is.numeric(df1$x_lon)[1] ==FALSE) {
+    if  (is.numeric(df1$x_lon)[1] == FALSE) {
         stop("The X coordinate field is not a numeric object. Change the variable format before continuing")
     }
-    if  (is.numeric(df1$y_lat)[1] ==FALSE) {
+    if  (is.numeric(df1$y_lat)[1] == FALSE) {
         stop("The Y coordinate field is not a numeric object. Change the variable format before continuing")
     }
     
     duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to))
-    df1$duration <- duration%/%dminutes(1)  # This is the modelo exact duration in minutes, rounded down
+    df1$duration <- duration %/% dminutes(1)  # This is the modelo exact duration in minutes, rounded down
     
     df1["aoristic_datacheck"] <- 0  #Create a datacheck column to hold results
     
@@ -85,14 +85,14 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
         txt <- paste(txt, "     and did not find any logical errors in the date sequence.", "\n", sep = "")
     }
     message(txt)
-    txt <- ''
+    txt <- ""
     
     message("     Coordinates check:")
-    if (errors.coord > 0 || errors.zero > 0 ){
-        if (errors.coord > 0){
+    if (errors.coord > 0 || errors.zero > 0) {
+        if (errors.coord > 0) {
             txt <- paste(txt, "     ", errors.coord, " rows missing spatial coordinates.", "\n", sep = "")
         }
-        if (errors.zero > 0){
+        if (errors.zero > 0) {
             txt <- paste(txt, "     ", errors.zero, " rows had a zero spatial coordinate.", "\n", sep = "")
         }
     } else{
@@ -104,4 +104,3 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     aoristic.datacheck <- df1
     return(aoristic.datacheck)
 }
-

@@ -9,13 +9,13 @@ aoristic.datacheck(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo)
 \arguments{
 \item{data1}{data.frame with a minimum of 4 columns with X, Y coords, Start and End date/time}
 
-\item{Xcoord}{a vector of the X coordinate or latitude (passed through for user)}
+\item{Xcoord}{a vector of the X coordinate or latitude (numeric object)}
 
-\item{Ycoord}{a vector of the Y coordinate or longitude (passed through for user)}
+\item{Ycoord}{a vector of the Y coordinate or longitude (numeric object)}
 
 \item{DateTimeFrom}{a  vector of the column name for FromDateTime (POSIXct date-time object)}
 
-\item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object). If missing, one hour duration assigned.}
+\item{DateTimeTo}{a vector of the column name for ToDateTime (POSIXct date-time object)}
 }
 \value{
 A data frame flagging any problems or logical errors from an aoristic data check
@@ -40,5 +40,5 @@ and again, the aoristic value is assigned to the 'Start' datetime hour.
 datacheck.df <- aoristic.datacheck(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 }
 \references{
-Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 }

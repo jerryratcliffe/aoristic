@@ -7,13 +7,13 @@
 #' distribution for comparison to the daily value. 
 #' 
 #' @param data1 a data frame output from the aoristic2.df function
-#' @param marks marks=FALSE. Use True to show tick marks for week distribution. Leave blank otherwise.
+#' @param marks marks=FALSE. TRUE shows tick marks for week distribution. Default is FALSE.
 #' @examples 
 #' aoristic.graph(dcburgsum)
 #' aoristic.graph(dcburgsum, TRUE)
 #' @export
 #' @import grid
-#' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+#' @references Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 # Some useful keyboard shortcuts for package authoring: Install Package: 'Ctrl + Shift + B' Check
 # Package: 'Ctrl + Shift + E' Test Package: 'Ctrl + Shift + T'
 
@@ -40,9 +40,9 @@ aoristic.graph <- function(data1, marks = FALSE) {
     bar.color <- "steelblue4"       # color for the day-to-day chart
     bar.color.all <- "darkorange4"  # color for the entire week chart
     bar.width <- 0.7
-    plots.df$scaled <- (plots.df$all * (1/(max.value.all/max.value)))  # Create the proportional line value
+    plots.df$scaled <- (plots.df$all * (1 / (max.value.all/max.value)))  # Create the proportional line value
     
-    plot_data_column = function(data.title, show.dots) {
+    plot_data_column <- function(data.title, show.dots) {
         ggplot(plots.df, aes(x = revised.names, y = active)) + ylim(0, max.value) + ggtitle(data.title) + 
             geom_bar(stat = "identity", width = bar.width, fill = bar.color) + {
             if (show.dots) 
@@ -51,7 +51,7 @@ aoristic.graph <- function(data1, marks = FALSE) {
         } + xlab("") + ylab("Aoristic total")
     }
     
-    plot_data_column_all = function(data.title, show.dots) {
+    plot_data_column_all <- function(data.title, show.dots) {
         ggplot(plots.df, aes(x = revised.names, y = active)) + ylim(0, max.value.all) + ggtitle(data.title) + 
             geom_bar(stat = "identity", width = bar.width, fill = bar.color.all) + 
         xlab("") + ylab("Aoristic total")
@@ -83,7 +83,7 @@ multiplot1 <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
     # Make a list from the ... arguments and plotlist
     plots <- c(list(...), plotlist)
     
-    numPlots = length(plots)
+    numPlots <- length(plots)
     
     # If layout is NULL, then use 'cols' to determine layout
     if (is.null(layout)) {

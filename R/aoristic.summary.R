@@ -9,20 +9,22 @@
 #' The function will attempt to open the jpg file for the user. 
 #'  
 #' NOTE: Be aware that the distribution of values is NOT the same as the aoristic.ref() output, because
-#' the summary charts and graphs  move Sunday to the end of the week to keep the weekend together.
+#' the summary charts and graphs move Sunday to the end of the week to keep the weekend together.
 #' 
 #' @param data1 a data frame output from the aoristic.df function
-#' @param output output ='xlsx' for an Excel format output, output ='jpg' for JPEG grid, blank otherwise
+#' @param output output ='xlsx' for an Excel format output
+#' #' output ='jpg' for JPG grid, blank otherwise
 #' @return A data frame with aoristic values summed for each hour of the week
 #' @examples 
 #' \dontrun{
+#' 
 #' aor.summary <- aoristic.summary(aor.df)
 #' aor.summary <- aoristic.summary(aor.df, 'xlsx')
 #' aor.summary <- aoristic.summary(aor.df, 'jpg')
 #' }
 #' @import formattable htmltools
 #' @export
-#' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+#' @references Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 
 
 aoristic.summary <- function (data1, output = ""){

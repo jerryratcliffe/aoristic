@@ -6,23 +6,23 @@
 #' The output retains the source data, and can be reimported into a GIS for spatial analysis. The output 
 #' from this function is used in other aoristic library functions. 
 #' 
-#' NOTE: Events with no recorded End/To datetime will be given a default time span of one hour from
-#' the Start/From datetime. Events with start datetime events after the end datetime will be 
-#' ignored. Events with time spans lasting more than one week (>168 hours) will default to a time span of
-#' 168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
+#' NOTE: If an observation is missing the End/To datetime, the entire aoristic weight (1.0) will be assigned to the
+#' hour block containing the Start/From datetime. Events with start datetime events after the end datetime will also 
+#' be assigned to the hour block containing the Start/From datetime. Events with time spans lasting more than one 
+#' week (>168 hours) will default to a time span of 168 hours and a value of ~ 0.0059 (1/168) assigned to each day/hour.
 #' 
 #'
 #' @param data1 data frame with a minimum of 4 columns with X, Y coords, Start and End date/time
-#' @param Xcoord a vector of the event X coordinate or latitude (passed through for user)
-#' @param Ycoord a vector of the event Y coordinate or longitude (passed through for user)
+#' @param Xcoord a vector of the event X coordinate or latitude (numeric object)
+#' @param Ycoord a vector of the event Y coordinate or longitude (numeric object)
 #' @param DateTimeFrom a vector of the column name for FromDateTime (POSIXct date-time object)
 #' @param DateTimeTo a vector of the column name for ToDateTime (POSIXct date-time object) 
-#' @return A data frame with aoristic values for each hour of the week for each row
+#' @return A data frame with aoristic values for each hour of the week for each observation
 #' @import lubridate
 #' @examples 
 #' df <- aoristic.df(dcburglaries, 'X', 'Y', 'StartDateTime', 'EndDateTime')
 #' @export
-#' @references Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal Analysis of High Volume Crime Patterns. Journal of Quantitative Criminology, 18(1), 23-43.
+#' @references Ratcliffe, J. H. (2002). Aoristic signatures and the spatio-temporal analysis of high volume crime patterns. Journal of Quantitative Criminology, 18(1), 23-43.
 #'
 #'
 
@@ -43,7 +43,7 @@ aoristic.df <- function
     df1$y_lat <- data1[, Ycoord]
     df1$datetime_from <- data1[, DateTimeFrom]
     df1$datetime_to <- data1[, DateTimeTo]
-    myMessages = "T"
+    myMessages <- "T"
     
     
     if (!class(df1$datetime_from)[1] == "POSIXct") {
@@ -54,12 +54,12 @@ aoristic.df <- function
     }
     
     duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to))
-    df1$duration <- duration%/%dminutes(1)  # This is the modelo exact duration in minutes, rounded down
+    df1$duration <- duration %/% dminutes(1)  # This is the modelo exact duration in minutes, rounded down
     
     # DATA ERROR CHECKING:
     # This catches where the user only has a from/start date. This can occur when the event time is known.
     errors.missing.df <- plyr::count(is.na(df1[, 4]))
-    if (nrow(subset(errors.missing.df, x== TRUE))>0) {
+    if (nrow(subset(errors.missing.df, x == TRUE )) > 0) {
         errors.missing <- subset(errors.missing.df, x == TRUE)$freq
         df1$duration[is.na(df1$datetime_to)] <- 1  # If duration missing default to one minute
     } else {
@@ -80,7 +80,7 @@ aoristic.df <- function
     # Create a new dataframe to hold aoristic value for each hour of the week. 
     df2 <- data.frame(matrix(0, ncol = 168, nrow = nrow(df1)))
     
-    for (i in 1:168) {  
+    for (i in 1:168){  
         names(df2)[i] <- paste("hour", i, sep = "") 
     }
     df1 <- cbind(df1, df2)  # Bind the source data to the hours matrix
@@ -89,18 +89,18 @@ aoristic.df <- function
     
     # Loop each data row and allocate aoristic probability --------------------
     
-    for (i in 1:nrow(df1)) {
-        from.day <- wday(df1[i, 'datetime_from'])               # The day number for the start date
-        from.hour <- hour(df1[i, 'datetime_from'])              # The hour number for the start hour
-        time.span <- df1[i, 'duration']                         # The event time span
+    for (i in seq_len(nrow(df1))) {
+        from.day <- wday(df1[i, "datetime_from"])               # The day number for the start date
+        from.hour <- hour(df1[i, "datetime_from"])              # The hour number for the start hour
+        time.span <- df1[i, "duration"]                         # The event time span
         hour.position <- ((24 * (from.day - 1)) + from.hour) + 1
         cur.column.name <- paste("hour", hour.position, sep = "")
-        left.in.hour <- 60 - minute(df1[i, 'datetime_from'])    # For when start hour begins > :00
-        aor.minute <- 1/time.span                               # Aoristic weight per minute
+        left.in.hour <- 60 - minute(df1[i, "datetime_from"])    # For when start hour begins > :00
+        aor.minute <- 1 / time.span                               # Aoristic weight per minute
         
         # Catch the rare occurrence when there is no START date-time
-        if (is.na(from.day)){
-            txt <- paste("Warning message: No START date-time found in row ",i,". Row will be ignored.", sep='')
+        if (is.na(from.day)) {
+            txt <- paste("Warning message: No START date-time found in row ", i, ". Row will be ignored.", sep = '')
             message(txt)
             next
         }
@@ -109,26 +109,26 @@ aoristic.df <- function
             # Event duration > one week. Increments each day/hour equally.
             for (j in 1:168) {
                 cur.column.name <- paste("hour", j, sep = "")
-                df1[i, cur.column.name] <- df1[i, cur.column.name] + 1/168
+                df1[i, cur.column.name] <- df1[i, cur.column.name] + 1 / 168
             }
         }
         
         
-        if (is.na(df1[i, 'datetime_to'])){
+        if (is.na(df1[i, 'datetime_to'])) {
             # The End date is missing, in crime data often when the event time is precisely known. 
             # In these cases, aoristic.df assigns the containing hour block +1
             df1[i, cur.column.name] <- df1[i, cur.column.name] + 1 
         }   
         
         
-        if (time.span >=0 && time.span <= 1 && !is.na(df1[i, 'datetime_to'])){
+        if (time.span >= 0 && time.span <= 1 && !is.na(df1[i, 'datetime_to'])) {
             # Event duration is known precisely, with duration 0 or 1 and the TO datetime
             # field exists. In these cases, aoristic.df assigns the containing hour block +1
             df1[i, cur.column.name] <- df1[i, cur.column.name] + 1
         }
         
         
-        if (time.span < 0){
+        if (time.span < 0) {
             # Event time span is illogical in that End datetime is before Start datetime.
             # Some options here. Either -1-, ignore this row, or -2- use the Start datetime
             # and proceed as if the End datetime did not exist [as above].
@@ -138,22 +138,22 @@ aoristic.df <- function
         }
         
         
-        if (time.span >1 && time.span < 10080){
+        if (time.span > 1 && time.span < 10080) {
             # We have an event with a time span that has to be distributed appropriately.
             # Assign aoristic weights until the remaining minutes in the time span are exhausted.
             rmg.mins <- time.span   
             
-            while (rmg.mins > 0){
-                if (rmg.mins <= left.in.hour){
+            while (rmg.mins > 0) {
+                if (rmg.mins <= left.in.hour) {
                     # then the current hour can be assigned the remaining aoristic weight
                     df1[i, cur.column.name] <- df1[i, cur.column.name] + (rmg.mins * aor.minute)
                     rmg.mins <- 0
                 }
-                if(rmg.mins > left.in.hour){
+                if(rmg.mins > left.in.hour) {
                     df1[i, cur.column.name] <- df1[i, cur.column.name] + (left.in.hour * aor.minute)
                     rmg.mins <- rmg.mins - left.in.hour             # decrease rmg.mins
                     left.in.hour <- 60                              # reset so the next time period is a full hour
-                    ifelse(hour.position >= 168,hour.position <- 1, hour.position <- hour.position + 1)
+                    ifelse(hour.position >= 168, hour.position <- 1, hour.position <- hour.position + 1)
                     cur.column.name <- paste("hour", hour.position, sep = "")
                 }
             }
@@ -173,9 +173,9 @@ aoristic.df <- function
             message(paste("  ", errors.logic, " row(s) had END/TO datetimes before START/FROM datetimes.", "\n", sep = ""))
         }
         
-        if(errors.missing > 0 || errors.logic > 0){
-            txt <- paste(    "  Use 'aoristic.datacheck()' to identify these rows.", "\n", sep = "")
-            txt <- paste(txt,"  '?aoristic.datacheck' explains how aoristic.df handles these data.", "\n", sep = "")
+        if (errors.missing > 0 || errors.logic > 0){
+            txt <- paste("  Use 'aoristic.datacheck()' to identify these rows.", "\n", sep = "")
+            txt <- paste(txt, "  '?aoristic.datacheck' explains how aoristic.df handles these data.", "\n", sep = "")
             message(txt)
         }
         

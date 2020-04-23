@@ -16,7 +16,7 @@ My email address for maintainer purposes is: jhr@temple.edu
 
 ## Changes
 
-There are major changes, because in many regards the old code from 5+ years ago has been rewritten and updated. New functionality has been added and most of the old functions have been deprecated. To gauge any potential impact, I tweeted a warning about the package to crime analysis networks and #RStats. I received a single reply, and confirmed with the replier that the functionality he needed was available in the new release. 
+There are major changes, because the old code from 5+ years ago has been rewritten and updated. New functionality has been added and most of the old functions have been discontinued. To gauge any potential impact, I tweeted a warning about the package to crime analysis networks and #RStats. I received a single reply, and confirmed with the replier that the functionality he needed was available in the new release. 
 
 ## Submission version
 
