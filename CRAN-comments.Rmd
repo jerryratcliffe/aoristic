@@ -18,6 +18,7 @@ My email address for maintainer purposes is: jhr@temple.edu
 
 There are major changes, because the old code from 5+ years ago has been rewritten and updated. New functionality has been added and most of the old functions have been discontinued. To gauge any potential impact, I tweeted a warning about the package to crime analysis networks and #RStats. I received a single reply, and confirmed with the replier that the functionality he needed was available in the new release. 
 
+
 ## Submission version
 
 Please note that although this is not a new submission for 'aoristic', it is my first submission as a submitter/maintainer. 

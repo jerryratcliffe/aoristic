@@ -2,7 +2,11 @@
 
 language: r
 cache: packages
-warnings_are_errors: false
+warnings_are_errors: true
+
+os:
+- linux
+- osx
 
 r:
   - oldrel
@@ -13,3 +17,4 @@ notifications:
   email:
     on_success: change
     on_failure: change
+
