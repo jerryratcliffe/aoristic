@@ -88,6 +88,7 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
     txt <- ""
     
     message("     Coordinates check:")
+
     if (errors.coord > 0 || errors.zero > 0) {
         if (errors.coord > 0) {
             txt <- paste(txt, "     ", errors.coord, " rows missing spatial coordinates.", "\n", sep = "")

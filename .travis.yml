@@ -1,5 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+<<<<<<< HEAD
 language: r
 cache: packages
 warnings_are_errors: false
@@ -13,3 +14,7 @@ notifications:
   email:
     on_success: change
     on_failure: change
+=======
+language: R
+cache: packages
+>>>>>>> 17c1749d6664213f0c4db811301a4a7e666d4023
