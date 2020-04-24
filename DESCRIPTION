@@ -1,6 +1,6 @@
 Package: aoristic
 Type: Package
-Title: Generates aoristic probability distributions
+Title: Generates Aoristic Probability Distributions
 Version: 1.0.0
 Author: Jerry Ratcliffe
 Maintainer: Jerry Ratcliffe <jhr@temple.edu>
