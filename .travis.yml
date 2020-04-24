@@ -13,6 +13,5 @@ os:
 r: 
   - oldrel
   - release
-  - devel
 
 warnings_are_errors: true
