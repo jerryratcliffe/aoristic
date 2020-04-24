@@ -14,14 +14,5 @@ r:
   - oldrel
   - release
   - devel
-<<<<<<< HEAD
+
 warnings_are_errors: true
-=======
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
-
-Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS = "true")
->>>>>>> e540ede78c831d3a47067b8166262c76dd3bf5b3
