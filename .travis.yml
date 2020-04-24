@@ -1,20 +1,17 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-language: r
+--- 
+? "Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS = \"true\")"
+: ~
 cache: packages
-warnings_are_errors: true
-
-os:
-- linux
-- osx
-
-r:
+language: r
+notifications: 
+  email: 
+    on_failure: change
+    on_success: change
+os: 
+  - linux
+  - osx
+r: 
   - oldrel
   - release
   - devel
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
-
+warnings_are_errors: true
