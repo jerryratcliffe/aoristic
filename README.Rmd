@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.com/jerryratcliffe/aoristic.svg?branch=master)](https://travis-ci.com/jerryratcliffe/aoristic)
 <!-- badges: end -->
 
-The goal of aoristic is to make some sense of temporally vague data. It can sometimes be difficult to ascertain when some events (such as property crime) occur because the victim is not present when the crime occurs. As a result, police databases often record a 'start' or 'from' date and time, and an 'end' or 'to' date and time. The 'start' datetime usually references when the victim last saw their stolen property, and the 'to' datetime records when they first discovered their property missing. The period between the 'start' datetime and 'end' datetime is referred to as the event’s ‘time span’. 
+The goal of aoristic is to make sense of temporally vague data. It can sometimes be difficult to ascertain when some events (such as property crime) occur because the victim is not present when the crime happens As a result, police databases often record a *start* (or *from*) date and time, and an *end* (or *to*) date and time. The *start* datetime usually references when the victim last saw their stolen property, and the *to* date-time records when they first discovered their property missing. The period between the *start* datetime and *end* date-time is referred to as the event’s *time span*. 
 
-The time span between these date/times can be minutes, hours, or sometimes days: hence the term 'Aoristic', a word meaning “denoting simple occurrence of an action without reference to its completeness, duration, or repetition”. It has its origins in the Greek word *aoristos* which means undefined. For events with a location describes with either a latitude/longitude, or X,Y coordinate pair, and a start and end date/time, this package generates an aoristic data.frame with aoristic weighted probability values for each hour of the week, for each row. Various descriptive outputs are available.
+The time span between these date-times can be minutes, hours, or sometimes days: hence the term 'Aoristic', a word meaning “denoting simple occurrence of an action without reference to its completeness, duration, or repetition”. It has its origins in the Greek word *aoristos* which means *undefined*. For events with a location describes with either a latitude/longitude or X,Y coordinate pair, and a start and end date-time, this package generates an aoristic data frame with aoristic weighted probability values for each hour of the week, for each row. Various descriptive and graphic outputs are available.
 
 ## What's new?
 
@@ -29,13 +29,13 @@ The time span between these date/times can be minutes, hours, or sometimes days:
 
 A lot! Version 0.6 was originally released on CRAN in 2015 by Dr. George Kikuchi then of Fresno State University and now at the Philadelphia Police Department. Given his extensive responsibilities he has been unable to maintain and update the program since the initial release. With his permission, the package has been taken over in 2020 and updated by Dr. Jerry Ratcliffe of Temple University. 
 
-Much of the original functionality has been deprecated and replaced by this updated package. In particular, version 1.0.0 onwards dispenses with rounding to the nearest hour for time spans, and uses a minute-by-minute method. In earlier versions, as was common in aoristic approaches until recently, time spans were rounded up and down. So an event that happened between 10.55am and 11.55am would have an aoristic weight of 0.5 assigned to each hour, 1000-1059 and 1100-1159. This is despite the majority of the event occurring in the 11am hour. That rounding is removed in v1.0.0 and aoristic weightings are assigned by the minute.
+Much of the original functionality has been discontinued and replaced by this updated package. In particular, version 1.0.0 onwards dispenses with rounding to the nearest hour for time spans, and uses a minute-by-minute method. In earlier versions (as was common in aoristic approaches until recently) time spans were rounded to the hour. So an event that happened between 10.55am and 11.55am would have an aoristic weight of 0.5 assigned to each hour, 1000-1059 and 1100-1159. This is despite the majority of the event occurring in the 11am hour. That rounding is removed in version 1.0.0 and aoristic weightings are assigned by the minute.
 
 The kml mapping function from v0.6 is replaced here with a simpler plot function that maps the individual points for an user-selected hour. See ?aoristic.map
 
 There is a new graph function that plots the overall aoristic distribution for an entire week, as well as each individual day of the week. see ?aoristic.graph
 
-See the example below for a workflow example.
+There is some rudimentary data checking in aoristic; however, most users will find that their effort is getting the date-time variables into the correct format. See the formatting example below for guidance.
 
 
 ## Installation
@@ -53,7 +53,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("jerryratcliffe/aoristic")
 ```
 
-## Example
+## Data formatting example
 
 The package has some limited error checking; however, the main challenge that users will face is getting the data into the correct datetime format. Most of the heavy lifting is done by the aoristic.df() function. The user passes the name of a data frame and four parameters representing columns that contain
 
@@ -65,28 +65,52 @@ The package has some limited error checking; however, the main challenge that us
 
 - **DateTimeTo** a vector for the 'To' datetime (POSIXct date-time object)
 
-The package 'lubridate' is recommended as a way to more easily get the date time data into the correct format. 
-
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+The package 'lubridate' is recommended as a way to more easily get the date time data into the correct format. As a demonstration, consider one of the datasets available in the aoristic package. 
+```{r}
 library(aoristic)
-## basic example code
+data(NYburg)
+head(NYburg)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The data consist of the crime *from* date (CMPLNT_FR_DT) and time (CMPLNT_FR_TM), the crime *to* date and time (CMPLNT_TO_DT and CMPLNT_TO_TM), and X and Y coordinates of the crime event. 
+Data preparation in this case will involve three steps (for START and END date-times):
+1. Convert the times from (Excel originated) fractions of the day
+2. Combine the dates and times into a new variable
+3. Convert the new variable into a date-time format
 
-```{r cars}
-summary(cars)
+#### 1. Convert times
+The two time variables are in fractions of the day. We can replace the existing variables by recasting them in a more readable format, and view the result.
+```{r}
+NYburg$CMPLNT_FR_TM <- format(as.POSIXct((NYburg$CMPLNT_FR_TM) * 86400, origin = "1970-01-01"), "%H:%M")
+NYburg$CMPLNT_TO_TM <- format(as.POSIXct((NYburg$CMPLNT_TO_TM) * 86400, origin = "1970-01-01"), "%H:%M")
+head(NYburg)
+
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+#### 2. Combine dates and times
+The aoristic functions expect the date and time variables to be in a single column, with a space separating them. We can do that with this code, which creates two new variables:
+```{r}
+NYburg$STARTDateTime <- paste(NYburg$CMPLNT_FR_DT,NYburg$CMPLNT_FR_TM, sep=' ')
+NYburg$ENDDateTime <- paste(NYburg$CMPLNT_TO_DT,NYburg$CMPLNT_TO_TM, sep=' ')
+head(NYburg)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+#### 3. Convert new variables into date-time objects
+The past stage is to use the convenience of the lubridate package to convert the string of dates and times into a date-time object:
+```{r}
+library(lubridate)
+NYburg$STARTDateTime <- ymd_hm(NYburg$STARTDateTime, tz = "")
+NYburg$ENDDateTime <- ymd_hm(NYburg$ENDDateTime, tz = "")
+```
+
+You get a warning that 49 observations failed to parse, because they are missing data (= *NA*). This sometimes happens when the police know exactly when the crime took place, and they only record the start date-time. We can see the final result of all this formatting:
+```{r}
+head(NYburg)
+```
+
+With the data formatted properly, we can start to use the aoristic functions. For example, you should always check the data to familiarize yourself with any missing data, or to see if any observations have logical errors where the from date-time occurs before the to date-time. The aoristic.df function can handle this, but it is always good to know your data. 
+```{r}
+aor.chk.df <- aoristic.datacheck(NYburg, 'X_COORD_CD', 'Y_COORD_CD', 'STARTDateTime', 'ENDDateTime')
+
+```
+

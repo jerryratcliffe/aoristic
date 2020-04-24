@@ -34,3 +34,19 @@
 #' }
 "dcburgsum"
 
+#' Residential burglaries, Manhattan borough, New York City, NY, 2019
+#'
+#' A dataset with a residential burglaries in the Borough of Manhattan, New York City, NY for 2019. 
+#' Data include start and end date-times, and coordinates. 
+#'
+#' @format A data frame with 1233 rows and 6 variables:
+#' \describe{
+#'   \item{CMPLNT_FR_DT}{Crime from date in Date format}
+#'   \item{CMPLNT_FR_TM}{Crime from time in number format}
+#'   \item{CMPLNT_TO_DT}{Crime to date in Date format}
+#'   \item{CMPLNT_TO_TM}{Crime to time in number format}
+#'   \item{X_COORD_CD}{X coordinate of crime event in state plane format}
+#'   \item{Y_COORD_CD}{Y coordinate of crime event in state plane format}
+#' }
+#' @source \url{https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243/data}
+"NYburg"

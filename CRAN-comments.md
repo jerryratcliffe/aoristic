@@ -16,13 +16,14 @@ My email address for maintainer purposes is: <jhr@temple.edu>
 
 ## Changes
 
-There are major changes, because in many regards the old code from 5+
-years ago has been rewritten and updated. New functionality has been
-added and most of the old functions have been deprecated. To gauge any
-potential impact, I tweeted a warning about the package to crime
-analysis networks and \#RStats. I received a single reply, and confirmed
-with the replier that the functionality he needed was available in the
-new release.
+There are major changes, because the old code from 5 years ago has been
+rewritten and updated. New functionality has been added and most of the
+old functions have been discontinued. To gauge any potential impact, I
+tweeted a warning about the package to crime analysis networks and
+\#RStats. I received a single reply, and confirmed with the replier that
+the functionality he needed was available in the new release. There are
+no dependencies and George tells me he is only aware of one person that
+used the package.
 
 ## Submission version
 
@@ -32,6 +33,12 @@ it is my first submission as a submitter/maintainer.
 ## R CMD check results
 
 There were no ERRORs, WARNINGs, or NOTEs.
+
+## Test environments
+
+os: - linux - osx
+
+r: - oldrel - release - devel
 
 ## Dependencies
 
