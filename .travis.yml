@@ -18,3 +18,4 @@ notifications:
     on_success: change
     on_failure: change
 
+Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS = "true")
