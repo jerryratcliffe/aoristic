@@ -27,7 +27,8 @@ Please note that although this is not a new submission for 'aoristic', it is my 
 ## R CMD check results
 There were no ERRORs, WARNINGs, or NOTEs. 
 
-## Test environments
+## Test environments 
+##### Tested with TRAVIS
 os:
 - linux
 - osx

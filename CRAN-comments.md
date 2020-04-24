@@ -36,6 +36,8 @@ There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Test environments
 
+##### Tested with TRAVIS
+
 os: - linux - osx
 
 r: - oldrel - release - devel
