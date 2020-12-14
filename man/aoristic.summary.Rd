@@ -18,11 +18,10 @@ A data frame with aoristic values summed for each hour of the week
 \description{
 Summarizes the sum of aoristic weights for each hour of the week, based on output from an aoristic data 
 frame (created by aoristic.df). The function returns a data frame, with optional outputs. 
-Option 'xlsx' sends the data frame to an Excel spreadsheet in the same folder as the source 
-data. Filenames increment to prevent overwriting previous analyses. Using option 'jpg' 
-creates a color coded summary table in jpg format in the same folder as the source data.
-The filename is aoristic_distribution.jpg and it will overwrite previous files of the same name.
-The function will attempt to open the jpg file for the user. 
+Option 'xlsx' sends the data frame to an Excel spreadsheet in the current working directory. 
+Filenames increment to prevent overwriting previous analyses. Using option 'jpg' 
+creates a color coded summary table in jpg format in the working directory.
+The filename is aoristic_distribution.jpg, adding incremental numbers as necessary to the filename.
  
 NOTE: Be aware that the distribution of values is NOT the same as the aoristic.ref() output, because
 the summary charts and graphs move Sunday to the end of the week to keep the weekend together.
