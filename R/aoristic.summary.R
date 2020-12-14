@@ -27,15 +27,15 @@
 
 
 aoristic.summary <- function (data1, output = ""){
-  
- 
+
 # Create the output data frame --------------------------------------------
 
     df3 <- data.frame(matrix(0, ncol = 7, nrow = 24))
     output.row <- 1
     output.col <- 1
     f <- the.hour <- the.day <- rat.hour <- NULL
-    
+
+
     for (k in 1:168)  # Sum the column values for each hour of the week
     {
       cur.column.name <- paste("hour", k, sep = "")
@@ -62,6 +62,8 @@ aoristic.summary <- function (data1, output = ""){
     for (j in 2:8){# recode hours as numeric
       df4[ ,j] <- as.numeric(df4[, j])
     }
+    
+    
     
 
 # Optional outputs --------------------------------------------------------
@@ -114,18 +116,17 @@ aoristic.summary <- function (data1, output = ""){
       a.min <- min(df5$f)
       a.max <- max(df5$f)
       a.med <- ((a.max-a.min)/2)+a.min
-      
-      p <- ggplot(data = df5, aes(x = the.hour, y = reorder(the.day, -(rat.hour)))) +
+
+    p <- ggplot(data = df5, aes(x = the.hour, y = reorder(the.day, -(rat.hour)))) +
         geom_tile(aes(fill = f), color = "white") +
         geom_text(aes(label = round(f))) +
         scale_x_continuous(breaks = seq(0,23,1)) +
         scale_fill_gradient2(low = muted("lightblue"), mid = "gray80",
                              high = scales::muted("red"), midpoint = a.med,
                              breaks = scales::pretty_breaks(n = 6)) +
-        labs(fill = "Frequency", x = "Hour", y = "")
+                            labs(fill = "Frequency", x = "Hour", y = "")
 
-            p <- p +
-        theme(legend.title = element_text( size = 22),
+    p <- p +  theme(legend.title = element_text( size = 22),
               legend.key.height = unit(1, "cm"),
               legend.text = element_text(size = 18),
               axis.title.x = element_text(size = 18),
@@ -137,6 +138,7 @@ aoristic.summary <- function (data1, output = ""){
               panel.border = element_blank())
       p <- p + ggtitle(" ")
       p <- p + theme(plot.title = element_text(size = 22))
+
       print(p)
       dev.off()
       
@@ -147,6 +149,5 @@ aoristic.summary <- function (data1, output = ""){
             
       }
 
-      
   return(df4)
 }
