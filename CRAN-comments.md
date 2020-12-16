@@ -11,8 +11,8 @@ My email address for maintainer purposes is: <jhr@temple.edu>
 
 ## Changes
 
-Modified code in ‘aoristic.summary’. Created new function
-‘aoristic.plot’
+Modified code in ‘aoristic.summary’.  
+Created new function ‘aoristic.plot’
 
 ## Submission version
 
