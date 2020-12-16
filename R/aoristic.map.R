@@ -74,8 +74,8 @@ aoristic.map <- function(data1, AorHour = "1") {
     
     # create the ggplot map object
     map.plot <- ggplot(mapdata, aes(x = X, y = Y, colour = Aoristic.value)) + geom_point(size = 4, alpha = 0.6) + 
-        scale_x_continuous( limits = c(x.min, x.max), expand = c(0, 0) ) +
-        scale_y_continuous( limits = c(y.min, y.max), expand = c(0, 0) ) +
+        scale_x_continuous(limits = c(x.min, x.max), expand = c(0, 0) ) +
+        scale_y_continuous(limits = c(y.min, y.max), expand = c(0, 0) ) +
         my.color.pal + 
         labs(title = title.txt, x = "X coordinate or Longitude", y = "Y coordinate or Latitude")
    

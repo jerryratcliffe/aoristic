@@ -149,11 +149,11 @@ aoristic.df <- function
                     df1[i, cur.column.name] <- df1[i, cur.column.name] + (rmg.mins * aor.minute)
                     rmg.mins <- 0
                 }
-                if(rmg.mins > left.in.hour) {
+                if (rmg.mins > left.in.hour) {
                     df1[i, cur.column.name] <- df1[i, cur.column.name] + (left.in.hour * aor.minute)
                     rmg.mins <- rmg.mins - left.in.hour             # decrease rmg.mins
                     left.in.hour <- 60                              # reset so the next time period is a full hour
-                    ifelse(hour.position >= 168, hour.position <- 1, hour.position <- hour.position + 1)
+                    ifelse (hour.position >= 168, hour.position <- 1, hour.position <- hour.position + 1)
                     cur.column.name <- paste("hour", hour.position, sep = "")
                 }
             }

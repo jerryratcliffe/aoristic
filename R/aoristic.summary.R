@@ -101,7 +101,7 @@ aoristic.summary <- function (data1, output = ""){
         output.file <- paste(current.folder, '/Aoristic_summary_', filenum.inc, '.jpg',sep='')
       }
       
-      days=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")
+      days=c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     
       jpeg(output.file, width = 1200, height = 400)
       
@@ -109,7 +109,7 @@ aoristic.summary <- function (data1, output = ""){
         select(-c(Range)) %>%
         tidyr::gather (df4, f) %>%
         mutate (the.hour = rep(0:23, 7)) %>%
-        mutate (the.day = rep(days, times = c(24,24,24,24,24,24,24))) %>%
+        mutate (the.day = rep(days, times = c(24, 24, 24, 24, 24, 24, 24))) %>%
         mutate (rat.hour = (seq(1, 168, by = 1))) %>%
         mutate (f = as.numeric(f))
       
@@ -145,7 +145,7 @@ aoristic.summary <- function (data1, output = ""){
       
       while (!is.null(dev.list()))  dev.off()
       
-      txt1 <- paste('\n****** Aoristic summary grid jpg written to: \n',output.file, sep='       ')
+      txt1 <- paste('\n****** Aoristic summary grid jpg written to: \n', output.file, sep='       ')
       message(txt1)
             
       }
