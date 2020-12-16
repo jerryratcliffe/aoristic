@@ -40,7 +40,7 @@ aoristic.graph <- function(data1, marks = FALSE) {
     bar.color <- "steelblue4"       # color for the day-to-day chart
     bar.color.all <- "darkorange4"  # color for the entire week chart
     bar.width <- 0.7
-    plots.df$scaled <- (plots.df$all * (1 / (max.value.all/max.value)))  # Create the proportional line value
+    plots.df$scaled <- (plots.df$all * (1 / (max.value.all / max.value)))  # Create the proportional line value
     
     plot_data_column <- function(data.title, show.dots) {
         ggplot(plots.df, aes(x = revised.names, y = active)) + ylim(0, max.value) + ggtitle(data.title) + 

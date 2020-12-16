@@ -29,16 +29,24 @@ end date-time, this package generates an aoristic data frame with
 aoristic weighted probability values for each hour of the week, for each
 row. Various descriptive and graphic outputs are available.
 
-## What’s new?
+## What’s new in Version 1.1.0?
+
+  - This version removes a convoluted process of outputting a formatted
+    table to a jpeg with a simpler mechanism. This avoids the user
+    downloading a third-party software package. The change occurs in the
+    ‘aoristic.summary’ function.
+  - Adds a simple plot output option with new function ‘aoristic.plot’
+
+## Previous versions
 
 ### Version 1.0.0
 
-A lot\! Version 0.6 was originally released on CRAN in 2015 by
-Dr. George Kikuchi then of Fresno State University and now at the
-Philadelphia Police Department. Given his extensive responsibilities he
-has been unable to maintain and update the program since the initial
-release. With his permission, the package has been taken over in 2020
-and updated by Dr. Jerry Ratcliffe of Temple University.
+Version 0.6 was originally released on CRAN in 2015 by Dr. George
+Kikuchi then of Fresno State University and now at the Philadelphia
+Police Department. Given his extensive responsibilities he has been
+unable to maintain and update the program since the initial release.
+With his permission, the package has been taken over in 2020 and updated
+by Dr. Jerry Ratcliffe of Temple University.
 
 Much of the original functionality has been discontinued and replaced by
 this updated package. In particular, version 1.0.0 onwards dispenses

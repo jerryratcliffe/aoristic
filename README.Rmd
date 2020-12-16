@@ -23,11 +23,17 @@ The goal of aoristic is to make sense of temporally vague data. It can sometimes
 
 The time span between these date-times can be minutes, hours, or sometimes days: hence the term 'Aoristic', a word meaning “denoting simple occurrence of an action without reference to its completeness, duration, or repetition”. It has its origins in the Greek word *aoristos* which means *undefined*. For events with a location describes with either a latitude/longitude or X,Y coordinate pair, and a start and end date-time, this package generates an aoristic data frame with aoristic weighted probability values for each hour of the week, for each row. Various descriptive and graphic outputs are available.
 
-## What's new?
+## What's new in Version 1.1.0?
+
+* This version removes a convoluted process of outputting a formatted table to a jpeg with a simpler mechanism. This avoids the user downloading a third-party software package. The change occurs in the 'aoristic.summary' function. 
+* Adds a simple plot output option with new function 'aoristic.plot'
+
+
+## Previous versions
 
 ### Version 1.0.0
 
-A lot! Version 0.6 was originally released on CRAN in 2015 by Dr. George Kikuchi then of Fresno State University and now at the Philadelphia Police Department. Given his extensive responsibilities he has been unable to maintain and update the program since the initial release. With his permission, the package has been taken over in 2020 and updated by Dr. Jerry Ratcliffe of Temple University. 
+Version 0.6 was originally released on CRAN in 2015 by Dr. George Kikuchi then of Fresno State University and now at the Philadelphia Police Department. Given his extensive responsibilities he has been unable to maintain and update the program since the initial release. With his permission, the package has been taken over in 2020 and updated by Dr. Jerry Ratcliffe of Temple University. 
 
 Much of the original functionality has been discontinued and replaced by this updated package. In particular, version 1.0.0 onwards dispenses with rounding to the nearest hour for time spans, and uses a minute-by-minute method. In earlier versions (as was common in aoristic approaches until recently) time spans were rounded to the hour. So an event that happened between 10.55am and 11.55am would have an aoristic weight of 0.5 assigned to each hour, 1000-1059 and 1100-1159. This is despite the majority of the event occurring in the 11am hour. That rounding is removed in version 1.0.0 and aoristic weightings are assigned by the minute.
 
