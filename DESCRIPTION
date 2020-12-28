@@ -24,7 +24,6 @@ Description: It can sometimes be difficult to ascertain when some events (such a
 License: GPL-3
 Encoding: UTF-8
 Imports: 
-    foreign,
     openxlsx,
     ggplot2,
     grid,
