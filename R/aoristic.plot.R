@@ -8,6 +8,8 @@
 #' 
 #' @param data1 a data frame output from the aoristic.df function
 #' @return ggplot object
+#' @importFrom stats reorder
+
 #' @examples 
 #' \dontrun{
 #' aoristic.plot(aor.df)  

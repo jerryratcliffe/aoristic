@@ -14,6 +14,7 @@
 #' @param output output ='xlsx' for an Excel format output
 #' #' output ='jpg' for JPG grid, blank otherwise
 #' @return A data frame with aoristic values summed for each hour of the week
+#' @importFrom grDevices dev.list dev.off jpeg 
 #' @examples 
 #' \dontrun{
 #' 
