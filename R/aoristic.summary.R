@@ -82,7 +82,7 @@ aoristic.summary <- function (data1, output = ""){
         }
 
         openxlsx::write.xlsx(df4, output.file, sheetName = "Aoristic",
-                   col.names = TRUE, row.names = TRUE, append = FALSE)
+                   colnames = TRUE, rownames = TRUE, append = FALSE)
 
         txt1 <- paste('\n****** Aoristic summary file for Excel written to: \n',output.file, sep='       ')
         message(txt1)
