@@ -29,6 +29,30 @@
 
 aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) {
     
+  # BUGHUNT
+  bughunt <- F
+  if (bughunt){ # Only used if I am debugging this function
+    testset <- 2
+    if (testset == 1)
+    {
+      data1 <- DCburg
+      Xcoord <- 'XCOORD'
+      Ycoord <- 'YCOORD'
+      DateTimeFrom <- 'STARTDateTime'
+      DateTimeTo <- 'ENDDateTime'
+    } else {
+      data1 <- NYburg
+      Xcoord <- 'X_COORD_CD'
+      Ycoord <- 'Y_COORD_CD'
+      DateTimeFrom <- 'STARTDateTime'
+      DateTimeTo <- 'ENDDateTime'
+    }
+  } #/BUGHUNT
+  
+  
+  
+  
+  
     if (!is.data.frame(data1)) {
         stop("The input data frame specified is not a data.frame object")
     }
@@ -56,8 +80,11 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
         stop("The Y coordinate field is not a numeric object. Change the variable format before continuing")
     }
     
-    duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to))
-    df1$duration <- duration %/% dminutes(1)  # This is the modelo exact duration in minutes, rounded down
+    suppressWarnings (duration <- as.duration(ymd_hms(df1$datetime_from) %--% ymd_hms(df1$datetime_to)))
+    
+    # Take the duration variable and add to the data.frame
+    df1$duration <- duration 
+    
     
     df1["aoristic_datacheck"] <- 0  #Create a datacheck column to hold results
     

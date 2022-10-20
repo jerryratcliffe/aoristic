@@ -28,15 +28,36 @@
 
 aoristic.df <- function
 (data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) {
+  
+  
+  # BUGHUNT
+  bughunt <- F
+  if (bughunt){ # Only used if I am debugging this function
+    testset <- 2
+    if (testset == 1)
+    {
+      data1 <- DCburg
+      Xcoord <- 'XCOORD'
+      Ycoord <- 'YCOORD'
+      DateTimeFrom <- 'STARTDateTime'
+      DateTimeTo <- 'ENDDateTime'
+    } else {
+      data1 <- NYburg
+      Xcoord <- 'X_COORD_CD'
+      Ycoord <- 'Y_COORD_CD'
+      DateTimeFrom <- 'STARTDateTime'
+      DateTimeTo <- 'ENDDateTime'
+    }
+  } #/BUGHUNT
+  
+  
     
     if (!is.data.frame(data1)) {
         stop("The input data frame specified is not a data.frame object")
     }
     
-    x_lon <- y_lat <- x <- NULL
-    
-    
     # Build a local data.frame and populate with passed arguments
+    x_lon <- y_lat <- x <- NULL
     df1 <- data.frame(matrix(ncol = 4, nrow = nrow(data1)))
     colnames(df1) <- c("x_lon", "y_lat", "datetime_from", "datetime_to")
     df1$x_lon <- data1[, Xcoord]
@@ -96,7 +117,7 @@ aoristic.df <- function
         hour.position <- ((24 * (from.day - 1)) + from.hour) + 1
         cur.column.name <- paste("hour", hour.position, sep = "")
         left.in.hour <- 60 - minute(df1[i, "datetime_from"])    # For when start hour begins > :00
-        aor.minute <- 1 / time.span                               # Aoristic weight per minute
+        aor.minute <- 1 / time.span                             # Aoristic weight per minute
         
         # Catch the rare occurrence when there is no START date-time
         if (is.na(from.day)) {
@@ -116,8 +137,8 @@ aoristic.df <- function
         
         if (is.na(df1[i, 'datetime_to'])) {
             # The End date is missing, in crime data often when the event time is precisely known. 
-            # In these cases, aoristic.df assigns the containing hour block +1
-            df1[i, cur.column.name] <- df1[i, cur.column.name] + 1 
+            # In these cases, aoristic.df assigns the time.span to the containing hour block (+1)
+            df1[i, cur.column.name] <- df1[i, cur.column.name] + time.span 
         }   
         
         
@@ -168,17 +189,21 @@ aoristic.df <- function
         if (errors.missing > 0) {
             message(paste("  ", errors.missing, " row(s) were missing END/TO datetime values.", sep = ""))
         }
-        # Report how many rows only start datetimes after end datetimes
-        if (errors.logic > 0) {
-            message(paste("  ", errors.logic, " row(s) had END/TO datetimes before START/FROM datetimes.", "\n", sep = ""))
-        }
-        
-        if (errors.missing > 0 || errors.logic > 0){
+      # Report how many rows only start datetimes after end datetimes
+      if (errors.logic > 0) {
+        message(paste("  ", errors.logic, " row(s) had END/TO datetimes before START/FROM datetimes.", sep = ""))
+      }
+      # Report rogue errors (miscellaneous wtfs)
+      if (errors.rogue > 0) {
+        message(paste("  ", errors.rogue, " row(s) had miscellaneous errors that this package repaired.", "\n", sep = ""))
+      }
+      if (errors.missing > 0 || errors.logic > 0){
             txt <- paste("  Use 'aoristic.datacheck()' to identify these rows.", "\n", sep = "")
             txt <- paste(txt, "  '?aoristic.datacheck' explains how aoristic.df handles these data.", "\n", sep = "")
-            message(txt)
-        }
-        
+      }
+      txt <- paste(txt, "  Any warnings appearing below indicate miscellaneous data errors that could not", "\n", sep = "")
+      txt <- paste(txt, "  diagnosed and corrected by the aoristic package. They have not be used in the analysis.","\n", sep = "")
+      message(txt)
     }  
     
     return(df1)
