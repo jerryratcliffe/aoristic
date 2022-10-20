@@ -88,7 +88,7 @@ aoristic.df <- function
   errors.missing.df <- plyr::count(is.na(df1[, 4]))
   errors.missing <- subset(errors.missing.df, x == TRUE)$freq
   
-  if (nrow(subset(errors.missing.df, x == TRUE )) > 0) {
+  if (length(errors.missing) > 0) {
     df1$duration[is.na(df1$datetime_to)] <- 1  
     # If TO datetime is missing, assign a duration of one minute (at the START datetime)
   } else {
@@ -112,7 +112,7 @@ aoristic.df <- function
   errors.rogue.df <- plyr::count(is.na(df1[, 5]))
   errors.rogue <- subset(errors.rogue.df, x == TRUE)$freq
   
-  if (errors.rogue > 0) {
+  if (length(errors.rogue) > 0) {
     # Fix the problem by adding a second to the start and end date times and recalculating duration
     df1$datetime_from[is.na(df1[, 5])] <- df1$datetime_from[is.na(df1[, 5])] + seconds(1)
     df1$datetime_to[is.na(df1[, 5])] <- df1$datetime_to[is.na(df1[, 5])] + seconds(1)
@@ -249,7 +249,6 @@ aoristic.df <- function
       txt <- paste(txt, "  '?aoristic.datacheck' explains how aoristic.df handles these data.", "\n", sep = "")
     }
     txt <- paste(txt, "  Any warnings appearing below indicate miscellaneous data errors that could not", "\n", sep = "")
-    txt <- paste(txt, "  diagnosed and corrected by the aoristic package, and have been ignored in the analysis.","\n", sep = "")
     txt <- paste(txt, "  diagnosed and corrected by the aoristic package. They have not be used in the analysis.","\n", sep = "")
     message(txt)
   }  

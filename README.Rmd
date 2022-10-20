@@ -15,21 +15,20 @@ knitr::opts_chunk$set(
 
 # aoristic
 
-<!-- badges: start -->
-[![Travis build status](https://travis-ci.com/jerryratcliffe/aoristic.svg?branch=master)](https://travis-ci.com/jerryratcliffe/aoristic)
-<!-- badges: end -->
-
 The goal of aoristic is to make sense of temporally vague data. It can sometimes be difficult to ascertain when some events (such as property crime) occur because the victim is not present when the crime happens As a result, police databases often record a *start* (or *from*) date and time, and an *end* (or *to*) date and time. The *start* datetime usually references when the victim last saw their stolen property, and the *to* date-time records when they first discovered their property missing. The period between the *start* datetime and *end* date-time is referred to as the event’s *time span*. 
 
 The time span between these date-times can be minutes, hours, or sometimes days: hence the term 'Aoristic', a word meaning “denoting simple occurrence of an action without reference to its completeness, duration, or repetition”. It has its origins in the Greek word *aoristos* which means *undefined*. For events with a location describes with either a latitude/longitude or X,Y coordinate pair, and a start and end date-time, this package generates an aoristic data frame with aoristic weighted probability values for each hour of the week, for each row. Various descriptive and graphic outputs are available.
 
-## What's new in Version 1.1.0?
+## What's new in Version 1.1.1?
+
+* A new version of "R-devel" svn revision r82904 (2022-09-24 19:32:52), redefined how some aspects of POSIXt are calculated. This caused some errors with how time durations are calculated in aoristic. This necessitated this minor update. 
+
+## Previous versions
+
+### Version 1.1.0
 
 * This version removes a convoluted process of outputting a formatted table to a jpeg with a simpler mechanism. This avoids the user downloading a third-party software package. The change occurs in the 'aoristic.summary' function. 
 * Adds a simple plot output option with new function 'aoristic.plot'
-
-
-## Previous versions
 
 ### Version 1.0.0
 

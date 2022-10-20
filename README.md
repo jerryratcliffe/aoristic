@@ -3,12 +3,6 @@
 
 # aoristic
 
-<!-- badges: start -->
-
-[![Travis build
-status](https://travis-ci.com/jerryratcliffe/aoristic.svg?branch=master)](https://travis-ci.com/jerryratcliffe/aoristic)
-<!-- badges: end -->
-
 The goal of aoristic is to make sense of temporally vague data. It can
 sometimes be difficult to ascertain when some events (such as property
 crime) occur because the victim is not present when the crime happens As
@@ -29,15 +23,22 @@ end date-time, this package generates an aoristic data frame with
 aoristic weighted probability values for each hour of the week, for each
 row. Various descriptive and graphic outputs are available.
 
-## What’s new in Version 1.1.0?
+## What’s new in Version 1.1.1?
 
-  - This version removes a convoluted process of outputting a formatted
-    table to a jpeg with a simpler mechanism. This avoids the user
-    downloading a third-party software package. The change occurs in the
-    ‘aoristic.summary’ function.
-  - Adds a simple plot output option with new function ‘aoristic.plot’
+- A new version of “R-devel” svn revision r82904 (2022-09-24 19:32:52),
+  redefined how some aspects of POSIXt are calculated. This caused some
+  errors with how time durations are calculated in aoristic. This
+  necessitated this minor update.
 
 ## Previous versions
+
+### Version 1.1.0
+
+- This version removes a convoluted process of outputting a formatted
+  table to a jpeg with a simpler mechanism. This avoids the user
+  downloading a third-party software package. The change occurs in the
+  ‘aoristic.summary’ function.
+- Adds a simple plot output option with new function ‘aoristic.plot’
 
 ### Version 1.0.0
 
@@ -95,17 +96,17 @@ format. Most of the heavy lifting is done by the aoristic.df() function.
 The user passes the name of a data frame and four parameters
 representing columns that contain
 
-  - **Xcoord** a vector of the event X coordinate or latitude (passed
-    through for user)
+- **Xcoord** a vector of the event X coordinate or latitude (passed
+  through for user)
 
-  - **Ycoord** a vector of the event Y coordinate or longitude (passed
-    through for user)
+- **Ycoord** a vector of the event Y coordinate or longitude (passed
+  through for user)
 
-  - **DateTimeFrom** a vector for the ‘From’ datetime (POSIXct date-time
-    object)
+- **DateTimeFrom** a vector for the ‘From’ datetime (POSIXct date-time
+  object)
 
-  - **DateTimeTo** a vector for the ‘To’ datetime (POSIXct date-time
-    object)
+- **DateTimeTo** a vector for the ‘To’ datetime (POSIXct date-time
+  object)
 
 The package ‘lubridate’ is recommended as a way to more easily get the
 date time data into the correct format. As a demonstration, consider one
@@ -124,15 +125,15 @@ head(NYburg)
 #> 233   2019-01-01    0.2083333   2019-01-01    0.3361111     999874     238251
 ```
 
-The data consist of the crime *from* date (CMPLNT\_FR\_DT) and time
-(CMPLNT\_FR\_TM), the crime *to* date and time (CMPLNT\_TO\_DT and
-CMPLNT\_TO\_TM), and X and Y coordinates of the crime event. Data
+The data consist of the crime *from* date (CMPLNT_FR_DT) and time
+(CMPLNT_FR_TM), the crime *to* date and time (CMPLNT_TO_DT and
+CMPLNT_TO_TM), and X and Y coordinates of the crime event. Data
 preparation in this case will involve three steps (for START and END
 date-times): 1. Convert the times from (Excel originated) fractions of
 the day 2. Combine the dates and times into a new variable 3. Convert
 the new variable into a date-time format
 
-#### 1\. Convert times
+#### 1. Convert times
 
 The two time variables are in fractions of the day. We can replace the
 existing variables by recasting them in a more readable format, and view
@@ -151,7 +152,7 @@ head(NYburg)
 #> 233   2019-01-01        00:00   2019-01-01        03:03     999874     238251
 ```
 
-#### 2\. Combine dates and times
+#### 2. Combine dates and times
 
 The aoristic functions expect the date and time variables to be in a
 single column, with a space separating them. We can do that with this
@@ -177,7 +178,7 @@ head(NYburg)
 #> 233 2019-01-01 00:00 2019-01-01 03:03
 ```
 
-#### 3\. Convert new variables into date-time objects
+#### 3. Convert new variables into date-time objects
 
 The past stage is to use the convenience of the lubridate package to
 convert the string of dates and times into a date-time object:
@@ -229,7 +230,7 @@ aor.chk.df <- aoristic.datacheck(NYburg, 'X_COORD_CD', 'Y_COORD_CD', 'STARTDateT
 #> 
 #> ---- Aoristic data check -------------------------------------------
 #>      49 rows were missing END/TO datetime values.
-#>      40 rows had END/TO datetimes before START/FROM datetimes.
+#>      27 rows had END/TO datetimes before START/FROM datetimes.
 #>      In the aoristic.datacheck data frame these rows are indicated
 #>      with missing end datetimes = 1 and start/end logical errors = 2
 #>      See the aoristic.datacheck column. Also see ?aoristic.datacheck
