@@ -32,6 +32,7 @@ aoristic.datacheck <- function(data1, Xcoord, Ycoord, DateTimeFrom, DateTimeTo) 
   # BUGHUNT 
   bughunt <- F
   DCburg <- NYburg <- NULL
+
   if (bughunt){ # Only used if I am debugging this function
     testset <- 2
     if (testset == 1)
