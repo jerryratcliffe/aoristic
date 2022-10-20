@@ -1,7 +1,7 @@
 Package: aoristic
 Type: Package
 Title: Generates Aoristic Probability Distributions
-Version: 1.1.0
+Version: 1.1.1
 Author: Jerry Ratcliffe
 Maintainer: Jerry Ratcliffe <jhr@temple.edu>
 Description: It can sometimes be difficult to ascertain when some events (such as property crime)
