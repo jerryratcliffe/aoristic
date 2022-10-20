@@ -3,25 +3,26 @@ CRAN-comments
 
 ## Update information
 
-This is minor update that improves production of one output table. Also
-added one function that simplifies a plot that the user might find
-helpful.
+Martin Maechler flagged up three weeks ago that with the development
+version of R, called “R-devel”, since svn revision r82904 (2022-09-24
+19:32:52) changes to “POSIXt” were throwing an error in my aoristic
+package. This update seeks to fix the errors and warnings that affected
+‘aoristic’
 
 My email address for maintainer purposes is: <jhr@temple.edu>
 
 ## Changes
 
-Modified code in ‘aoristic.summary’.  
-Created new function ‘aoristic.plot’
+Modified code in ‘aoristic.datacheck’. Modified code in ‘aoristic.df’.
 
 ## Submission version
 
-Version 1.1.0.
+Version 1.1.1.
 
 ## R CMD check results
 
 There were no ERRORs or WARNINGs. The only notes relate to absense of
-global defintion functions for device management. Complying with the
+global definition functions for device management. Complying with the
 suggestions in the notes, does not solve the issue, but neither do the
 issues affect any program management.
 
