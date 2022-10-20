@@ -32,6 +32,8 @@ aoristic.df <- function
   
   # BUGHUNT - used for JHR debugging purposes only
   bughunt <- F
+  DCburg <- MYburg <- NULL
+  
   if (bughunt){ 
     testset <- 1
     if (testset == 1)
