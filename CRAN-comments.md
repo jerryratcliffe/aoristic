@@ -3,35 +3,29 @@ CRAN-comments
 
 ## Update information
 
-This is minor update that improves production of one output table. Also
-added one function that simplifies a plot that the user might find
-helpful.
+Minor tweak to address impact of changes to POSIXlt in email from Martin
+Maechler a couple of weeks ago. The changes throw errors during time
+interval calculations. This update fixes the issue for this package.
 
 My email address for maintainer purposes is: <jhr@temple.edu>
 
 ## Changes
 
-Modified code in ‘aoristic.summary’.  
-Created new function ‘aoristic.plot’
+Slightly modified code in ‘aoristic.datacheck’ and ‘aoristic.df’.
 
 ## Submission version
 
-Version 1.1.0.
+Version 1.1.1.
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs. The only notes relate to absense of
-global defintion functions for device management. Complying with the
-suggestions in the notes, does not solve the issue, but neither do the
-issues affect any program management.
+There were no ERRORs or WARNINGs. The single NOTE relates to a possible
+bug in R-hub: <https://github.com/r-hub/rhub/issues/503>
 
 ## Test environments
 
-##### Tested with TRAVIS
-
-os: - linux - osx
-
-r: - oldrel - release - devel
+Tested on Fedora Linux, R-devel, clang, gfortran, Ubuntu Linux 20.04.1
+LTS, R-release, GCC
 
 ## Dependencies
 
